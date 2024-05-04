@@ -1,0 +1,22 @@
+.list-container {
+  margin-top: 10px;
+}
+.list-icon {
+  font-size: 17pt;
+  margin-right: 15px;
+  color: var(--text-color);
+}
+.list-text {
+  display: inline;
+  font-size: 14pt;
+  font-family: var(--font);
+  font-weight: 500;
+  font-style: normal;
+  color: var(--text-color);
+}
+.list-content-container {
+  margin: 7px 0 7px 0;
+}
+.list-content-container:hover {
+  cursor: pointer;
+}

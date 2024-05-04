@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'themes';
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$regms-client-primary: mat.define-palette(mat.$indigo-palette);
+$regms-client-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$regms-client-warn: mat.define-palette(mat.$red-palette);
+
+$regms-client-theme: mat.define-light-theme((
+  color: (
+    primary: $regms-client-primary,
+    accent: $regms-client-accent,
+    warn: $regms-client-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0
+));
+
+@include mat.all-component-themes($regms-client-theme);
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
+
+body {
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+}

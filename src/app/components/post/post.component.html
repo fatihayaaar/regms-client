@@ -1,0 +1,54 @@
+<div class="card post-content post" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)">
+  <div class="d-flex align-items-start">
+    <span class="avatar-container">
+      <app-avatar></app-avatar>
+    </span>
+    <span class="flex-grow-1">
+      <div class="border-0 pb-0 post-header">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center">
+            <div>
+              <div class="nav nav-divider">
+                <h6 class="nav-item card-title mb-0">
+                  <a href="#!" class="username-content">{{ this.post?.username }}</a>
+                  <span class="nav-item small post-date-item">2 hr</span>
+                </h6>
+              </div>
+            </div>
+          </div>
+          <div>
+            <span class="nav-item">
+              <app-dropdown-menu></app-dropdown-menu>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="text-content"> {{ this.post?.content }}</p>
+        @if (this.post!.mediasUrl.length > 0) {
+          <div class="img-container" (click)="openImageDialog(this.post!.mediasUrl[0])"
+               [ngStyle]="{ '--bg-image': 'url(' + (this.post!.mediasUrl[0] || 'default_image_url') + ')' }">
+            <div class="img-content">
+              <img src="{{ this.post!.mediasUrl[0] }}" alt="Your Image" style="max-height: 600px; max-width: 100%">
+            </div>
+          </div>
+        }
+        <ul class="nav nav-stack small">
+          <li class="nav-item btn btn-style">
+            <a class="nav-link active btn-content" href="#!" (click)="toggleLike()">
+              <i class="bi bi-hand-thumbs-up-fill"
+                 [ngClass]="{'text-danger': isLiked, 'btn-style': !isLiked}"></i> {{ this.post?.likesCount }}
+            </a>
+          </li>
+          <li class="nav-item btn btn-style">
+            <a class="nav-link btn-content" href="#!"><i
+              class="bi bi-chat-fill"></i> {{ this.post?.commentCount }}</a>
+          </li>
+          <li class="nav-item btn btn-style">
+            <a class="nav-link btn-content" href="#!"><i class="bi bi-share"></i></a>
+          </li>
+        </ul>
+      </div>
+    </span>
+  </div>
+</div>

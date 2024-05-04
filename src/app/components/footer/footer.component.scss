@@ -1,0 +1,11 @@
+.footer-text {
+  font-size: 10pt;
+  font-family: var(--font);
+  font-weight: 300;
+  font-style: normal;
+  color: var(--header-secondary-text-color);
+}
+.footer-border {
+  border: solid 0 var(--hr-color);
+  border-top-width: 1px;
+}

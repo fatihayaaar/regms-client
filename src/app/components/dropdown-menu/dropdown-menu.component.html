@@ -1,0 +1,10 @@
+<div class="dropdown">
+    <i (click)="isOpen = !isOpen" class="bi bi-three-dots options-icon"></i>
+    <ul [class.open]="isOpen" class="dropdown-menu">
+        @for (item of options; track item.toString()) {
+            <li (click)="selectOption(item)">
+                <a>{{ item }}</a>
+            </li>
+        }
+    </ul>
+</div>

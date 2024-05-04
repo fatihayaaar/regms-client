@@ -1,0 +1,18 @@
+<div class="content-container">
+  <div class="row">
+    <div class="col">
+      <app-clickable-list></app-clickable-list>
+      <app-footer></app-footer>
+    </div>
+    <div class="col-md-6 posts-container">
+      @for (item of this.posts; track item.username) {
+        <app-post [post]="item"></app-post>
+      } @empty {
+
+      }
+    </div>
+    <div class="col">
+      <app-trends-list></app-trends-list>
+    </div>
+  </div>
+</div>

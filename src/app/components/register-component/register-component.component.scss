@@ -1,0 +1,48 @@
+.form-control {
+  font-size: 1em;
+  border-color: var(--login-text-area-border-color);
+  border-radius: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: var(--login-text-area-color);
+  color: var(--text-color);
+}
+
+.form-control::placeholder {
+  color: var(--header-secondary-text-color);
+}
+
+.form-control:focus {
+  box-shadow: none;
+  color: var(--text-color);
+}
+
+.btn {
+  border-radius: 0;
+  font-size: 1em;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.btn:active {
+  background-color: var(--primary-action-color);
+}
+
+.form-url {
+  color: var(--primary-color);
+}
+
+.form-url:hover {
+  cursor: pointer;
+}
+
+.login-title {
+  color: var(--text-color);
+}
+
+.login-account-text {
+  color: var(--text-color);
+}
