@@ -1,4 +1,9 @@
 .dialog-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
   .img-container {
     position: relative;
@@ -8,42 +13,46 @@
     background-color: black;
     overflow: hidden;
 
-    .img-container::after {
-      content: '';
-      position: absolute;
-      top: -20%;
-      left: -20%;
-      width: 140%;
-      height: 140%;
-      background-image: var(--bg-image);
-      background-size: cover;
-      background-position: center;
-      filter: blur(15px);
-      opacity: 0.5;
-      z-index: -1;
-    }
-
     .img-content {
       position: relative;
       z-index: 1;
+
+      .close-button {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        cursor: pointer;
+        font-size: 20pt;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.6);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+      }
+
+      .close-button:active {
+        background-color: rgba(45, 45, 45, 0.6);
+      }
+
+      .image {
+        max-height: 100vh;
+      }
     }
   }
 
-  .close-button {
+  .img-container::after {
+    content: '';
     position: absolute;
-    top: 10px;
-    left: 10px;
-    cursor: pointer;
-    font-size: 20pt;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-
-    .close-button:active {
-      background-color: rgba(45, 45, 45, 0.6);
-    }
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    filter: blur(15px);
+    opacity: 0.5;
+    z-index: -1;
   }
 }
