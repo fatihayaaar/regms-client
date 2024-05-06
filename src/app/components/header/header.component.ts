@@ -4,6 +4,8 @@ import {ThemeService} from "../../services/theme.service";
 import {AvatarComponent} from "../avatar/avatar.component";
 import {AvatarMenuComponent} from "../avatar-menu/avatar-menu.component";
 import {DOCUMENT} from "@angular/common";
+import {MatDialog} from "@angular/material/dialog";
+import {UploadDialogComponent} from "../upload-dialog/upload-dialog.component";
 
 declare var bootstrap: any;
 
@@ -22,8 +24,12 @@ export class HeaderComponent implements OnInit {
     fullname: string = "";
     username: string = "";
 
-    constructor(private router: Router, private themeService: ThemeService, @Inject(DOCUMENT) private document: Document) {
-    }
+    constructor(
+        private router: Router,
+        private themeService: ThemeService,
+        @Inject(DOCUMENT) private document: Document,
+        private dialog: MatDialog,
+    ) {}
 
     ngOnInit(): void {
         (() => {
@@ -41,7 +47,6 @@ export class HeaderComponent implements OnInit {
         });
     }
 
-
     toggleDropdown(status: boolean) {
         this.isDropdownOpen = status;
         clearTimeout(this.timeoutId);
@@ -50,9 +55,10 @@ export class HeaderComponent implements OnInit {
     closeDropdown() {
         this.timeoutId = setTimeout(() => {
             this.isDropdownOpen = false;
-        }, 1000);
+        }, 750);
     }
 
-    logout() {
+    uploadButtonClick() {
+        this.dialog.open(UploadDialogComponent, {});
     }
 }

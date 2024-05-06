@@ -1,37 +1,46 @@
-.btn-send {
-  font-size: 1em;
-  background-color: #79315f;
-  color: #ffffff;
-  border: none;
-  height: 40px;
-  width: 40px;
-  border-radius: 50px;
-  margin: 0;
-}
-
-.btn-gallery {
-  font-size: 1em;
-  background-color: #fafafa;
-  color: #838383;
-  border: none;
-  padding: 10px 25px;
-  margin: 0 0 0 0;
-}
-
-.form-control {
-  font-size: 1em;
-  border-color: rgba(0, 0, 0, 0.0);
-  border-radius: 0;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-family: var(--font);
-  font-weight: 500;
-  font-style: normal;
-}
-
 .card-body {
-  border: 1px solid rgba(197, 197, 197, 0.18);
-  border-bottom-width: 0;
+  background-color: var(--menu-color);
+  border: none;
   border-radius: 0;
-  margin-bottom: 0;
+
+  .btn-send {
+    font-size: 1em;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    margin: 0;
+  }
+
+  .btn-gallery {
+    font-size: 1em;
+    background-color: var(--item-primary-color);
+    color: #838383;
+    border: none;
+    padding: 10px 25px;
+    margin: 0 0 0 0;
+  }
+
+  .form-control {
+    font-size: 1em;
+    border-color: rgba(0, 0, 0, 0.0);
+    border-radius: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: var(--font);
+    font-weight: 500;
+    font-style: normal;
+    background-color: transparent;
+    color: var(--text-color);
+  }
+
+  .form-control::placeholder {
+    color: var(--text-color);
+  }
+
+  .form-control:focus {
+    box-shadow: none;
+  }
 }

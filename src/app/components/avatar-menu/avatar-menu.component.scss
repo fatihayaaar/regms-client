@@ -2,11 +2,6 @@
   margin: 0 12px 0 12px;
   padding: 7px 15px 7px 15px;
 
-  .list-content-container:hover {
-    background-color: var(--item-hover-color);
-    cursor: pointer;
-  }
-
   .list-text {
     display: inline-block;
     font-size: 12pt;
@@ -64,3 +59,7 @@
   }
 }
 
+.list-content-container:hover {
+  background-color: var(--item-hover-color);
+  cursor: pointer;
+}
