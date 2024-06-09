@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {ThemeService} from "../../services/theme.service";
+import {AuthService} from "../../core/services/auth.service";
 
 @Component({
   selector: 'app-avatar-menu',
@@ -11,12 +12,16 @@ export class AvatarMenuComponent {
 
   isThemeChecked: boolean = true;
 
-  constructor(private themeService: ThemeService) {
+  constructor(private themeService: ThemeService, private authService: AuthService) {
     this.isThemeChecked = themeService.getIsDarkTheme();
   }
 
   toggleTheme() {
     this.isThemeChecked = !this.isThemeChecked;
     this.themeService.toggleTheme();
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

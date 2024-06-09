@@ -6,8 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:regms-client": "node dist/regms-client/server/server.mjs"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
@@ -22,12 +21,14 @@
     "@angular/platform-browser-dynamic": "^17.3.7",
     "@angular/platform-server": "^17.2.0",
     "@angular/router": "^17.3.7",
-    "@angular/ssr": "^17.2.2",
     "@fortawesome/fontawesome-free": "^6.5.2",
+    "@nguniversal/express-engine": "^7.0.2",
     "@nrwl/angular": "^18.3.4",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "express": "^4.18.2",
+    "keycloak-angular": "^15.2.1",
+    "keycloak-js": "^22.0.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
