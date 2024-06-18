@@ -1,8 +1,9 @@
 import {Component, Inject} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {ThemeService} from "./services/theme.service";
-import {HeaderComponent} from "./components/header/header.component";
+import {ThemeService} from "./core/services/theme.service";
 import {DOCUMENT} from "@angular/common";
+import {AuthService} from "./core/services/auth.service";
+import {HeaderComponent} from "./product/components/header/header.component";
 
 @Component({
     selector: 'app-root',
@@ -14,15 +15,12 @@ import {DOCUMENT} from "@angular/common";
 export class AppComponent {
     title = 'regms';
 
-    constructor(protected themeService: ThemeService, @Inject(DOCUMENT) protected document: Document) {
+    constructor(protected themeService: ThemeService, @Inject(DOCUMENT) protected document: Document, private authService: AuthService) {
         document.body.setAttribute('data-theme', themeService.getIsDarkTheme() ? "dark" : "light");
         document.body.style.backgroundColor = 'var(--background-color)';
     }
 
-    login(): void {
-    }
-
     public isLoggedIn(): boolean {
-        return true;
+        return this.authService.isLoggedIn;
     }
 }

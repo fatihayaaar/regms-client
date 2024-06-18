@@ -18,7 +18,19 @@ function initializeKeycloak(keycloak: KeycloakService) {
             },
             initOptions: {
                 onLoad: 'check-sso',
-                silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html'
+                silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html',
+                flow: "standard",
+            },
+            shouldAddToken: (request) => {
+                const { method, url } = request;
+
+                const isGetRequest = 'GET' === method.toUpperCase();
+                const acceptablePaths = ['/assets', '/clients/public'];
+                const isAcceptablePathMatch = acceptablePaths.some((path) =>
+                    url.includes(path)
+                );
+
+                return !(isGetRequest && isAcceptablePathMatch);
             }
         });
 }

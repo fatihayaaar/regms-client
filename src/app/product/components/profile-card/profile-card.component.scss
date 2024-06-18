@@ -1,0 +1,148 @@
+.profile-card {
+  margin: auto;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+}
+
+.card-header {
+  background-color: var(--profile-background-image-color);
+  margin: 20px 10% 0 10%;
+  border-radius: 10px;
+}
+
+.profile-card .card-header {
+  height: 150px;
+  overflow: hidden;
+  border: none;
+}
+
+.profile-card .card-img-top {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.profile-card .profile-img-container {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 160px;
+  height: 160px;
+  overflow: hidden;
+  border: none;
+  background-color: transparent;
+}
+
+.profile-card .profile-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-container {
+  margin-top: 90px;
+  display: block;
+  align-items: center;
+}
+
+.card-text {
+  font-family: var(--font);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1em;
+  color: var(--text-color);
+  margin: auto;
+}
+
+.card-title {
+  font-size: 1.5rem !important;
+}
+
+.biography-text {
+  margin: auto;
+  width: 600px;
+}
+
+.photo-change-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  align-content: center;
+  text-align: center;
+  vertical-align: center;
+  background-color: rgba(115, 115, 115, 0.2);
+  color: white;
+  padding: 1px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.photo-change-icon i {
+  font-size: 23px;
+}
+
+.profile-photo-change-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 35px;
+  height: 35px;
+  align-content: center;
+  text-align: center;
+  vertical-align: center;
+  background-color: rgb(35, 35, 35);
+  color: white;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.profile-photo-change-icon i {
+  font-size: 22px;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-send {
+  border: none;
+  align-items: center;
+  border-radius: 90px;
+  height: 40px;
+  width: 120px;
+}
+
+.btn-send:active {
+  background-color: var(--primary-action-color);
+}
+
+.biography-container {
+  height: 70px;
+  text-align: center;
+  align-content: center;
+}
+
+.profile-input {
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  border: dotted gray;
+  border-width: 0 0 1px 0;
+  width: auto;
+  color: var(--text-color);
+  font-family: var(--font);
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+}
+
+.text-padding {
+  padding: 0 0 1px 0;
+}

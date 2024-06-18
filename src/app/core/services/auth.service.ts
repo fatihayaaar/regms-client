@@ -1,12 +1,13 @@
 import {Injectable, OnInit} from "@angular/core";
 import {KeycloakService} from "keycloak-angular";
 import {KeycloakProfile} from "keycloak-js";
+import {state} from "@angular/animations";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService implements OnInit {
-    public isLoggedIn = false;
+    public isLoggedIn = this.keycloak.isLoggedIn();
     public userDetail: KeycloakProfile | null = null;
 
     constructor(private keycloak: KeycloakService) {
@@ -21,15 +22,18 @@ export class AuthService implements OnInit {
         }
     }
 
-    public async login(options: any) {
-        await this.keycloak.login(options).then(r => {});
+    public login(url: any, implicit: boolean = false) {
+        this.keycloak.login({
+            redirectUri: window.location.origin + url,
+        });
     }
 
     public logout() {
-        this.keycloak.logout().then(r => {});
+        this.keycloak.logout();
     }
 
     public getKeycloak() {
         return this.keycloak;
     }
+
 }

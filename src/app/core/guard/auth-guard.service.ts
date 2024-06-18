@@ -4,7 +4,7 @@ import {
     Router,
     RouterStateSnapshot
 } from '@angular/router';
-import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
+import { KeycloakAuthGuard } from 'keycloak-angular';
 import {AuthService} from "../services/auth.service";
 
 @Injectable({
@@ -23,12 +23,10 @@ export class AuthGuard extends KeycloakAuthGuard {
         state: RouterStateSnapshot
     ) {
         if (!this.authenticated) {
-            await this.authService.login({
-                redirectUri: window.location.origin + state.url
-            });
+            await this.authService.login(state.url, false);
         }
         const {roles: requiredRoles} = route.data;
-
+        console.log(this.authService.getKeycloak().getToken());
         if (!Array.isArray(requiredRoles) || requiredRoles.length === 0) {
             return true;
         }

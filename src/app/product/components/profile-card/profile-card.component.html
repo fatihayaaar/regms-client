@@ -1,0 +1,52 @@
+<div class="card profile-card">
+    <div class="card-header position-relative">
+        @if (this.backgroundImage != null) {
+            <img src="path-to-background-image.jpg" class="card-img-top" alt="Background Image">
+        }
+        @if (this.isEditModeBoxVisible) {
+            <div class="photo-change-icon">
+                <i class="bi bi-camera"></i>
+            </div>
+        }
+    </div>
+    <div class="profile-img-container position-absolute">
+        <app-avatar [width]="160" [height]="160"></app-avatar>
+
+        @if (this.isEditModeBoxVisible) {
+            <div class="profile-photo-change-icon">
+                <i class="bi bi-camera"></i>
+            </div>
+        }
+    </div>
+    <div class="text-center">
+        <div class="card-container">
+            @if (this.isEditModeBoxVisible) {
+                <p class="card-title card-text">
+                    <input [(ngModel)]="fullname" [firstLength]="this.fullname.length" appAutoResizeInput class="card-title card-text profile-input" />
+                </p>
+            }  @else {
+                <p class="card-title card-text text-padding">Fatih Ayar</p>
+            }
+            @if (this.isEditModeBoxVisible) {
+                <p class="card-text">
+                    <input [(ngModel)]="username" [firstLength]="this.username.length" appAutoResizeInput class="profile-input" />
+                </p>
+            } @else {
+                <p class="card-text text-padding">Fayar</p>
+            }
+        </div>
+        <div class="biography-container">
+            @if (this.isEditModeBoxVisible) {
+                <input [(ngModel)]="biographyText" [firstLength]="this.biographyText.length" appAutoResizeInput class="profile-input" />
+            } @else {
+                <p class="biography-text card-text text-padding">{{ biographyText }}</p>
+            }
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary btn-send" (click)="editProfileOnclick()">
+                {{ this.buttonText }}
+            </button>
+        </div>
+    </div>
+    <br>
+</div>

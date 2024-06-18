@@ -1,0 +1,41 @@
+.card {
+  border: none;
+  overflow-x: auto;
+}
+
+.btn {
+  font-family: var(--font);
+  font-weight: 400;
+  font-style: normal;
+  border-radius: 5px;
+  font-size: 1em;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 175px;
+}
+
+.btn:active {
+  background-color: var(--primary-action-color);
+}
+
+.title {
+  font-family: var(--font);
+  font-weight: 400;
+  font-style: normal;
+  color: #268017;
+  background-color: var(--secondary-color);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 5px;
+  width: 250px;
+}
+
+.hello-msg {
+  font-family: var(--font);
+  font-weight: 400;
+  font-style: normal;
+  color: var(--text-color);
+}
