@@ -1,3 +1,4 @@
 export const environment = {
-    appUrl: 'http://localhost:4200',
+    apiUrl: 'http://localhost:8180',
+    registerEndpoint: "/user/v1/public/register",
 };

@@ -4,9 +4,14 @@ import { importProvidersFrom } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { provideClientHydration } from '@angular/platform-browser';
-import { provideHttpClient } from '@angular/common/http';
+import {
+    HTTP_INTERCEPTORS,
+    provideHttpClient,
+    withInterceptorsFromDi
+} from '@angular/common/http';
 import {routes} from "./app.routes";
 import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
+import {KeycloakHttpInterceptor} from "./core/interceptors/keycloak-http.interceptor";
 
 function initializeKeycloak(keycloak: KeycloakService) {
     return () =>
@@ -21,17 +26,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
                 silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html',
                 flow: "standard",
             },
-            shouldAddToken: (request) => {
-                const { method, url } = request;
-
-                const isGetRequest = 'GET' === method.toUpperCase();
-                const acceptablePaths = ['/assets', '/clients/public'];
-                const isAcceptablePathMatch = acceptablePaths.some((path) =>
-                    url.includes(path)
-                );
-
-                return !(isGetRequest && isAcceptablePathMatch);
-            }
         });
 }
 
@@ -48,6 +42,13 @@ export const appConfig: ApplicationConfig = {
         },
         provideClientHydration(),
         provideAnimationsAsync(),
-        provideHttpClient(),
+        provideHttpClient(
+            withInterceptorsFromDi(),
+        ),
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: KeycloakHttpInterceptor,
+            multi: true
+        },
     ]
 };

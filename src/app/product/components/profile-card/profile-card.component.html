@@ -25,21 +25,21 @@
                     <input [(ngModel)]="fullname" [firstLength]="this.fullname.length" appAutoResizeInput class="card-title card-text profile-input" />
                 </p>
             }  @else {
-                <p class="card-title card-text text-padding">Fatih Ayar</p>
+                <p class="card-title card-text text-padding">{{ this.fullname }}</p>
             }
             @if (this.isEditModeBoxVisible) {
                 <p class="card-text">
                     <input [(ngModel)]="username" [firstLength]="this.username.length" appAutoResizeInput class="profile-input" />
                 </p>
             } @else {
-                <p class="card-text text-padding">Fayar</p>
+                <p class="card-text text-padding">{{ this.username }}</p>
             }
         </div>
         <div class="biography-container">
             @if (this.isEditModeBoxVisible) {
                 <input [(ngModel)]="biographyText" [firstLength]="this.biographyText.length" appAutoResizeInput class="profile-input" />
             } @else {
-                <p class="biography-text card-text text-padding">{{ biographyText }}</p>
+                <p class="biography-text card-text text-padding">{{ this.biographyText }}</p>
             }
         </div>
         <div class="text-center">

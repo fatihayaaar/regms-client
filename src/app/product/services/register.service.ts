@@ -1,28 +1,23 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {environment} from "../../environment";
+import {NetworkService} from "./network.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class RegisterService {
-    private registerAPIUrl = 'http://localhost:8180/user/v1/public/register';
 
-    constructor(private http: HttpClient) {
+    constructor(private network: NetworkService) {
     }
 
-    register(user: any): Observable<string> {
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json'
-        });
-
-        return this.http.post(this.registerAPIUrl, {
+    register(user: any) {
+        return this.network.post(environment.registerEndpoint, {
             "name": user.name,
             "surname": user.surname,
             "uid": user.username,
             "emailAddress": user.mail,
             "password": user.password,
             "gender": "male"
-        }, {headers, responseType: 'text'},);
+        });
     }
 }

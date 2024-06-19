@@ -4,6 +4,7 @@ import {FormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
 import {AutoResizeInputDirective} from "../../../directives/auto-resize-input.directive";
 import {UserService} from "../../services/user.service";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-profile-card',
@@ -25,13 +26,11 @@ export class ProfileCardComponent {
   buttonText: string = "Edit Profile";
   backgroundImage: any;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private snackBar: MatSnackBar) {
   }
 
   editProfileOnclick() {
     if (this.isEditModeBoxVisible) {
-      this.buttonText = "Edit Profile";
-      this.isEditModeBoxVisible = false;
       this.saveProfileDetail();
     } else {
       this.buttonText = "Save";
@@ -44,6 +43,24 @@ export class ProfileCardComponent {
   }
 
   saveChangeUsername() {
-    this.userService.changeUsername(this.username);
+    this.userService.changeUsername(this.username).subscribe(
+        response => {
+          if (response == "true") {
+            this.buttonText = "Edit Profile";
+            this.isEditModeBoxVisible = false;
+          } else {
+            const config = new MatSnackBarConfig();
+            config.duration = 5000;
+            config.verticalPosition = 'top';
+            this.snackBar.open("Bir hata oluştu", 'Close', config);
+          }
+        },
+        error => {
+          const config = new MatSnackBarConfig();
+          config.duration = 5000;
+          config.verticalPosition = 'top';
+          this.snackBar.open(error, 'Close', config);
+        }
+    );
   }
 }
