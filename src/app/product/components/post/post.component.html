@@ -25,11 +25,11 @@
       </div>
       <div class="card-body">
         <p class="text-content"> {{ this.post?.content }}</p>
-        @if (this.post!.mediasUrl.length > 0) {
-          <div class="img-container" (click)="openImageDialog(this.post!.mediasUrl[0])"
-               [ngStyle]="{ '--bg-image': 'url(' + (this.post!.mediasUrl[0] || 'default_image_url') + ')' }">
+        @if (this.post!.mediasUrl!.length > 0) {
+          <div class="img-container" (click)="openImageDialog(this.post!.mediasUrl?.[0])"
+               [ngStyle]="{ '--bg-image': 'url(' + (this.post!.mediasUrl?.[0] || 'default_image_url') + ')' }">
             <div class="img-content">
-              <img src="{{ this.post!.mediasUrl[0] }}" alt="Your Image" style="max-height: 600px; max-width: 100%">
+              <img src="{{ this.post!.mediasUrl?.[0] }}" alt="Your Image" style="max-height: 600px; max-width: 100%">
             </div>
           </div>
         }
@@ -37,7 +37,7 @@
           <li class="nav-item btn btn-style">
             <a class="nav-link active btn-content" href="#!" (click)="toggleLike()">
               <i class="bi bi-hand-thumbs-up-fill"
-                 [ngClass]="{'text-danger': isLiked, 'btn-style': !isLiked}"></i> {{ this.post?.likesCount }}
+                 [ngClass]="{'text-danger': isLiked, 'btn-style': !isLiked}"></i> {{ this.post?.likeCount }}
             </a>
           </li>
           <li class="nav-item btn btn-style">

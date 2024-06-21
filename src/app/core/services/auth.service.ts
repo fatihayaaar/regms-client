@@ -1,8 +1,6 @@
 import {Injectable, OnInit} from "@angular/core";
 import {KeycloakService} from "keycloak-angular";
 import {KeycloakProfile} from "keycloak-js";
-import {state} from "@angular/animations";
-
 @Injectable({
     providedIn: 'root'
 })
@@ -25,7 +23,7 @@ export class AuthService implements OnInit {
     public login(url: any, implicit: boolean = false) {
         this.keycloak.login({
             redirectUri: window.location.origin + url,
-        });
+        }).then(r => {});
     }
 
     public logout() {

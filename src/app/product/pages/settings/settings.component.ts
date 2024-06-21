@@ -1,14 +1,13 @@
 import {Component} from '@angular/core';
-import {Post} from "../../models/post.model";
 import {FooterComponent} from "../../components/footer/footer.component";
 import {ClickableListComponent} from "../../components/clickable-list/clickable-list.component";
 import {PostComponent} from "../../components/post/post.component";
 import {TrendsListComponent} from "../../components/trends-list/trends-list.component";
 
 @Component({
-  selector: 'home',
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
+  selector: 'settings',
+  templateUrl: './settings.component.html',
+  styleUrl: './settings.component.scss',
   standalone: true,
   imports: [
     ClickableListComponent,
@@ -17,8 +16,5 @@ import {TrendsListComponent} from "../../components/trends-list/trends-list.comp
     TrendsListComponent
   ]
 })
-export class HomeComponent {
-
-  posts: Post[] = [
-  ];
+export class SettingsComponent {
 }

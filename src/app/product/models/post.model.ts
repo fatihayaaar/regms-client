@@ -1,8 +1,17 @@
 export interface Post {
-  username: string;
-  avatarUrl: string;
-  content: string;
-  mediasUrl: string[]
-  likesCount: number;
-  commentCount: number;
+  id?: string;
+  userId?: string;
+  uri?: string;
+  text: string;
+  createdDate?: string;
+  updatedDate?: string;
+  likeCount?: number;
+  commentCount?: number;
+  visible?: boolean;
+  isDeleted?: boolean;
+
+  username?: string;
+  avatarUrl?: string;
+  mediasUrl?: string[];
+  content?: string;
 }

@@ -1,6 +1,10 @@
-<div class="page-container">
-    @if (this.isLoggedIn()) {
-        <app-header></app-header>
-    }
-    <router-outlet></router-outlet>
-</div>
+@if (false) {
+    <splash></splash>
+} @else {
+    <div class="page-container">
+        @if (this.isLoggedIn()) {
+            <app-header></app-header>
+        }
+        <router-outlet></router-outlet>
+    </div>
+}

@@ -9,4 +9,5 @@ import {Component, Input} from "@angular/core";
 export class AvatarComponent {
   @Input() width: any = 40;
   @Input() height: any = 40;
+  @Input() imgSrc = "assets/images/avatar/profile.png";
 }

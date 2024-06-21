@@ -1,0 +1,67 @@
+.photo-change-icon,
+.profile-photo-change-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  align-content: center;
+  text-align: center;
+  vertical-align: center;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.photo-change-icon {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(115, 115, 115, 0.2);
+  padding: 1px;
+
+  i {
+    font-size: 23px;
+  }
+}
+
+.profile-photo-change-icon {
+  width: 35px;
+  height: 35px;
+  background-color: rgb(35, 35, 35);
+  padding: 0;
+
+  i {
+    font-size: 22px;
+  }
+}
+
+.photo-menu {
+  display: none;
+  background: var(--header-secondary-color);
+  border: 0;
+  border-radius: 5px;
+  width: 200px;
+  padding: 5px 0;
+  margin-top: 5px;
+  position: relative;
+  text-align: left;
+  z-index: 9999;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item {
+  padding: 10px 20px;
+  color: var(--text-color);
+  font-family: var(--font);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 0.875rem;
+  user-select: none;
+}
+
+.menu-item:hover {
+  background-color: var(--item-hover-color);
+}
+
+.delete-photo-item {
+  color: #ff3e3e;
+}

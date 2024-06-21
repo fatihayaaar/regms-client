@@ -23,7 +23,7 @@ export class AuthGuard extends KeycloakAuthGuard {
         state: RouterStateSnapshot
     ) {
         if (!this.authenticated) {
-            await this.authService.login(state.url, false);
+            this.authService.login(state.url, false);
         }
         const {roles: requiredRoles} = route.data;
         console.log(this.authService.getKeycloak().getToken());

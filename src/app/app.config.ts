@@ -12,28 +12,16 @@ import {
 import {routes} from "./app.routes";
 import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
 import {KeycloakHttpInterceptor} from "./core/interceptors/keycloak-http.interceptor";
-
-function initializeKeycloak(keycloak: KeycloakService) {
-    return () =>
-        keycloak.init({
-            config: {
-                realm: 'regms',
-                url: 'http://localhost:8081/auth',
-                clientId: 'regms-client'
-            },
-            initOptions: {
-                onLoad: 'check-sso',
-                silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html',
-                flow: "standard",
-            },
-        });
-}
+import {createApollo} from "./graphql.module";
+import {HttpLink} from "apollo-angular/http";
+import {APOLLO_OPTIONS, ApolloModule} from "apollo-angular";
+import {initializeKeycloak} from "./keycloak.module";
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideRouter(routes),
         provideZoneChangeDetection({ eventCoalescing: true }),
-        importProvidersFrom(BrowserModule, KeycloakAngularModule),
+        importProvidersFrom(BrowserModule, KeycloakAngularModule, ApolloModule),
         {
             provide: APP_INITIALIZER,
             useFactory: initializeKeycloak,
@@ -49,6 +37,11 @@ export const appConfig: ApplicationConfig = {
             provide: HTTP_INTERCEPTORS,
             useClass: KeycloakHttpInterceptor,
             multi: true
+        },
+        {
+            provide: APOLLO_OPTIONS,
+            useFactory: createApollo,
+            deps: [HttpLink],
         },
     ]
 };

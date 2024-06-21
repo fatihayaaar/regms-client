@@ -6,9 +6,9 @@ import {PostComponent} from "../../components/post/post.component";
 import {TrendsListComponent} from "../../components/trends-list/trends-list.component";
 
 @Component({
-  selector: 'home',
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
+  selector: 'post',
+  templateUrl: './post-page.component.html',
+  styleUrl: './post-page.component.scss',
   standalone: true,
   imports: [
     ClickableListComponent,
@@ -17,8 +17,7 @@ import {TrendsListComponent} from "../../components/trends-list/trends-list.comp
     TrendsListComponent
   ]
 })
-export class HomeComponent {
+export class PostPageComponent {
 
-  posts: Post[] = [
-  ];
+  post: Post = {text: "test"};
 }

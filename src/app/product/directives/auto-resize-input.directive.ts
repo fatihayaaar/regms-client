@@ -20,6 +20,10 @@ export class AutoResizeInputDirective implements OnChanges {
     adjustWidth() {
         const inputElement = this.el.nativeElement;
         const valueLength = this.firstLength ? this.firstLength : 0;
-        inputElement.style.width = valueLength > 0 ? `${valueLength}ch` : this.firstLength + 'ch';
+        if (valueLength < 3) {
+            inputElement.style.width = 5 + 'ch';
+        } else {
+            inputElement.style.width = valueLength > 0 ? `${valueLength}ch` : this.firstLength + 'ch';
+        }
     }
 }

@@ -1,0 +1,8 @@
+<div class="photo-change-icon profile-photo-change-icon" (click)="openToggleMenu()" appClickOutside (clickOutside)="closeMenu()">
+    <i class="bi bi-camera"></i>
+    <div #menu class="photo-menu" style="display: none;">
+        <div (click)="backgroundImageInput.click()" class="menu-item">Fotoğraf Seç</div>
+        <div (click)="removePhoto()" class="menu-item delete-photo-item">Fotoğrafı Kaldır</div>
+    </div>
+    <input type="file" #backgroundImageInput style="display: none;" (change)="onFileSelected($event)" />
+</div>
