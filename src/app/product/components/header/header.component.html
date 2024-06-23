@@ -34,7 +34,7 @@
         </span>
       <span (mouseenter)="toggleDropdown(true)" (mouseleave)="closeDropdown()" class="avatar-container">
         <a [class.show]="isDropdownOpen" aria-expanded="false" aria-haspopup="true" class="avatar-button" id="dropdownMenuButton">
-          <app-avatar></app-avatar>
+          <app-avatar [imgSrc]="this.jpegPhoto"></app-avatar>
         </a>
         <div [class.show]="isDropdownOpen" aria-labelledby="dropdownMenuButton" class="dropdown-menu dropdown-menu-right">
           <app-avatar-menu></app-avatar-menu>

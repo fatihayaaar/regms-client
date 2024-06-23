@@ -1,14 +1,14 @@
 <div class="card profile-card">
     <div class="card-header position-relative">
-        @if (this.backgroundImage != null) {
-            <img [src]="this.backgroundImage" class="card-img-top" alt="Background Image">
+        @if (this.profile?.backgroundImage != null) {
+            <img [src]="this.profile!.backgroundImage" class="card-img-top" alt="Background Image">
         }
         @if (this.isEditModeBoxVisible) {
            <app-photo-options-menu (imageChanged)="onBackgroundImageChanged($event)" [isProfilePhoto]="false" id="background-photo-menu"></app-photo-options-menu>
         }
     </div>
     <div class="profile-img-container position-absolute">
-        <app-avatar [width]="160" [height]="160" [imgSrc]="this.profileImage"></app-avatar>
+        <app-avatar [width]="160" [height]="160" [imgSrc]="this.profile?.avatar"></app-avatar>
 
         @if (this.isEditModeBoxVisible) {
             <app-photo-options-menu (imageChanged)="onProfileImageChanged($event)" [isProfilePhoto]="true" id="profile-photo-menu"></app-photo-options-menu>
@@ -25,17 +25,17 @@
             }
             @if (this.isEditModeBoxVisible) {
                 <p class="card-text">
-                    <input [(ngModel)]="username" [firstLength]="this.username!.length" appAutoResizeInput class="profile-input" />
+                    <input [(ngModel)]="this.profile!.username" [firstLength]="this.profile!.username.length" appAutoResizeInput class="profile-input" />
                 </p>
             } @else {
-                <p class="card-text text-padding">{{ this.username }}</p>
+                <p class="card-text text-padding">{{ this.profile!.username }}</p>
             }
         </div>
         <div class="biography-container">
             @if (this.isEditModeBoxVisible) {
-                <input [(ngModel)]="biographyText" [firstLength]="this.biographyText!.length" appAutoResizeInput class="profile-input" />
+                <input [(ngModel)]="this.profile!.biography" [firstLength]="this.profile?.biography?.length" appAutoResizeInput class="profile-input" />
             } @else {
-                <p class="biography-text card-text text-padding">{{ this.biographyText }}</p>
+                <p class="biography-text card-text text-padding">{{ this.profile?.biography }}</p>
             }
         </div>
         <div class="text-center">

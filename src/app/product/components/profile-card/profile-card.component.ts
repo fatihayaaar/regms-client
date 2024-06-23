@@ -8,6 +8,8 @@ import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 import {ProfileService} from "../../services/profile.service";
 import {Profile} from "../../models/profile.model";
 import {DropdownMenuComponent} from "../photo-options-menu/photo-options-menu.component";
+import {ProfileStore} from "../../stores/profile.store";
+import * as _ from 'lodash';
 
 @Component({
     selector: 'app-profile-card',
@@ -18,51 +20,23 @@ import {DropdownMenuComponent} from "../photo-options-menu/photo-options-menu.co
 })
 export class ProfileCardComponent implements OnInit {
 
-    biographyText: string | undefined = '';
-    username: string | undefined = "null";
-    name: string | undefined = "null";
-    surname: string | undefined = "null";
-    backgroundImage: any;
-    profileImage: any = "assets/images/avatar/profile.png";
-
-    originalName: string | undefined = "null";
-    originalSurname: string | undefined = "null";
-    originalUsername: string | undefined = "null";
-    originalBiographyText: string | undefined = "";
-    originalBackgroundImage: any;
-    originalProfileImage: any = "assets/images/avatar/profile.png";
-
+    profile?: Profile;
+    originalProfile?: Profile;
     fullname: string = "null null";
-
     isEditModeBoxVisible: boolean = false;
     buttonText: string = "Edit Profile";
 
-    constructor(private userService: UserService, private profileService: ProfileService, private snackBar: MatSnackBar) {
+    constructor(private userService: UserService,
+                private profileService: ProfileService,
+                private profileStore: ProfileStore,
+                private snackBar: MatSnackBar,
+    ) {
     }
 
     ngOnInit() {
-        this.getProfile();
-    }
-
-    getProfile() {
-        this.profileService.getMyProfile((profile: Profile) => {
-            this.name = profile.user?.name;
-            this.surname = profile.user?.surname;
-            this.username = profile.user?.username;
-            this.biographyText = profile.biography;
-            this.backgroundImage = profile.backgroundImage;
-            this.profileImage = profile.user?.jpegPhoto;
-            this.fullname = `${this.name} ${this.surname}`;
-
-            this.originalName = this.name;
-            this.originalSurname = this.surname;
-            this.originalUsername = this.username;
-            this.originalBiographyText = this.biographyText;
-            this.originalProfileImage = this.profileImage;
-            this.originalBackgroundImage = this.backgroundImage;
-        }, (error) => {
-            this.showError('Profile could not be loaded.');
-        });
+        this.profile = this.profileStore.getMyProfile();
+        this.originalProfile = _.cloneDeep(this.profile);
+        this.fullname = `${this.profile!.name} ${this.profile!.surname}`;
     }
 
     editProfileOnclick() {
@@ -75,56 +49,55 @@ export class ProfileCardComponent implements OnInit {
     }
 
     cancelEdit() {
-        this.name = this.originalName;
-        this.surname = this.originalSurname;
-        this.username = this.originalUsername;
-        this.biographyText = this.originalBiographyText;
-        this.fullname = `${this.name} ${this.surname}`;
-        this.profileImage = this.originalProfileImage;
-        this.backgroundImage = this.originalBackgroundImage;
+        this.profile = _.cloneDeep(this.originalProfile);
 
         this.isEditModeBoxVisible = false;
         this.buttonText = "Edit Profile";
     }
 
     saveProfileDetail() {
-        if (!this.username || this.username.trim() === '') {
+        if (!this.profile!.username || this.profile!.username.trim() === '') {
             this.showError("Username cannot be empty.");
             return;
         }
-        if (!this.name || this.name.trim() === '') {
+
+        let result = this.splitNameAndSurname(this.fullname);
+        this.profile!.name = result.name;
+        this.profile!.surname = result.surname;
+
+        if (!this.profile!.name || this.profile!.name.trim() === '') {
             this.showError("Name cannot be empty.");
             return;
         }
-        if (!this.surname || this.surname.trim() === '') {
+        if (!this.profile!.surname || this.profile!.surname.trim() === '') {
             this.showError("Surname cannot be empty.");
             return;
         }
 
         let changesMade = false;
 
-        if (this.username !== this.originalUsername) {
+        if (this.profile!.username !== this.originalProfile!.username) {
             this.saveChangeUsername();
             changesMade = true;
         }
 
-        if (this.name !== this.originalName) {
+        if (this.profile!.name !== this.originalProfile!.name) {
             this.saveChangeName();
             changesMade = true;
         }
 
-        if (this.surname !== this.originalSurname) {
+        if (this.profile!.surname !== this.originalProfile!.surname) {
             this.saveChangeSurname();
             changesMade = true;
         }
 
-        if (this.biographyText !== this.originalBiographyText) {
+        if (this.profile?.biography !== this.originalProfile?.biography) {
             this.saveChangeBiography();
             changesMade = true;
         }
 
-        if (this.profileImage !== this.originalProfileImage) {
-            if (this.profileImage == "assets/images/avatar/profile.png") {
+        if (this.profile?.avatar !== this.originalProfile?.avatar) {
+            if (this.profile?.avatar == "assets/images/avatar/profile.png") {
                 this.deleteProfileImage();
             } else {
                 this.saveProfileImage();
@@ -132,8 +105,8 @@ export class ProfileCardComponent implements OnInit {
             changesMade = true;
         }
 
-        if (this.backgroundImage !== this.originalBackgroundImage) {
-            if (this.backgroundImage == null) {
+        if (this.profile?.backgroundImage !== this.originalProfile?.backgroundImage) {
+            if (this.profile?.backgroundImage == null) {
                 this.deleteBackgroundImage();
             } else {
                 this.saveBackgroundImage();
@@ -149,108 +122,112 @@ export class ProfileCardComponent implements OnInit {
 
 
     saveChangeUsername() {
-        this.userService.changeUsername(this.username!, (response) => {
-            if (response === "true") {
+        this.userService.changeUsername(this.profile!.username).subscribe((response) => {
+            if (response === true) {
+                this.originalProfile!.username = this.profile!.username;
+                this.profileStore.updateUsername(this.profile!.username);
                 this.buttonText = "Edit Profile";
                 this.isEditModeBoxVisible = false;
             } else {
                 this.showError("An error occurred while changing the username.");
             }
-        }, (error) => {
-            this.showError(error);
         });
     }
 
     saveChangeBiography() {
-        this.profileService.changeBiography(this.biographyText, (response) => {
-            if (response === "true") {
+        this.profileService.changeBiography(this.profile!.biography).subscribe((response) => {
+            if (response === true) {
+                this.originalProfile!.biography = this.profile!.biography;
+                this.profileStore.updateBiography(this.profile!.biography!);
                 this.buttonText = "Edit Profile";
                 this.isEditModeBoxVisible = false;
             } else {
                 this.showError("An error occurred while changing the biography.");
             }
-        }, (error) => {
-            this.showError(error);
         });
     }
 
     saveChangeName() {
-        this.userService.changeName(this.name!, (response) => {
-            if (response === "true") {
-                this.fullname = `${this.name} ${this.surname}`;
+        this.userService.changeName(this.profile!.name).subscribe((response) => {
+            if (response === true) {
+                this.fullname = `${this.profile!.name} ${this.profile!.surname}`;
+                this.originalProfile!.name = this.profile!.name;
+                this.profileStore.updateName(this.profile!.name);
+                this.buttonText = "Edit Profile";
+                this.isEditModeBoxVisible = false;
             } else {
                 this.showError("An error occurred while changing the name.");
             }
-        }, (error) => {
-            this.showError(error);
         });
     }
 
     saveChangeSurname() {
-        this.userService.changeSurname(this.surname!, (response) => {
-            if (response === "true") {
-                this.fullname = `${this.name} ${this.surname}`;
+        this.userService.changeSurname(this.profile!.surname).subscribe((response) => {
+            if (response === true) {
+                this.fullname = `${this.profile!.name} ${this.profile!.surname}`;
+                this.originalProfile!.surname = this.profile!.surname;
+                this.profileStore.updateSurname(this.profile!.surname);
+                this.buttonText = "Edit Profile";
+                this.isEditModeBoxVisible = false;
             } else {
                 this.showError("An error occurred while changing the surname.");
             }
-        }, (error) => {
-            this.showError(error);
         });
     }
 
     onBackgroundImageChanged(newImage: any) {
-        this.backgroundImage = newImage;
+        this.profile!.backgroundImage = newImage;
     }
 
     onProfileImageChanged(newImage: string) {
-        this.profileImage = newImage;
+        this.profile!.avatar = newImage;
     }
 
     saveProfileImage() {
-        this.userService.changeJpegPhoto(this.profileImage, (response) => {
-            if (response === "true") {
+        this.userService.changeAvatar(this.profile!.avatar).subscribe((response) => {
+            if (response === true) {
+                this.originalProfile!.avatar = this.profile!.avatar;
+                this.profileStore.updateAvatar(this.profile!.avatar);
                 this.showSuccess("Profile image updated successfully.");
+                this.buttonText = "Edit Profile";
+                this.isEditModeBoxVisible = false;
             } else {
                 this.showError("An error occurred while updating the profile image.");
             }
-        }, (error) => {
-            this.showError(error);
         });
     }
 
     deleteProfileImage() {
-        this.userService.deleteJpegPhoto((response) => {
-            if (response === "true") {
+        this.userService.deleteAvatar().subscribe((response) => {
+            if (response === true) {
                 this.showSuccess("Profile image updated successfully.");
             } else {
                 this.showError("An error occurred while updating the profile image.");
             }
-        }, (error) => {
-            this.showError(error);
         });
     }
 
     saveBackgroundImage() {
-        this.profileService.changeBackgroundImage(this.backgroundImage, (response) => {
-            if (response === "true") {
+        this.profileService.changeBackgroundImage(this.profile!.backgroundImage).subscribe((response) => {
+            if (response === true) {
+                this.originalProfile!.backgroundImage = this.profile!.backgroundImage;
+                this.profileStore.updateBackgroundImage(this.profile!.backgroundImage!);
                 this.showSuccess("Background image updated successfully.");
+                this.buttonText = "Edit Profile";
+                this.isEditModeBoxVisible = false;
             } else {
                 this.showError("An error occurred while updating the background image.");
             }
-        }, (error) => {
-            this.showError(error);
         });
     }
 
     deleteBackgroundImage() {
-        this.profileService.deleteBackgroundImage((response) => {
-            if (response === "true") {
+        this.profileService.deleteBackgroundImage().subscribe((response) => {
+            if (response === true) {
                 this.showSuccess("Background image updated successfully.");
             } else {
                 this.showError("An error occurred while updating the background image.");
             }
-        }, (error) => {
-            this.showError(error);
         });
     }
 
@@ -266,5 +243,12 @@ export class ProfileCardComponent implements OnInit {
         config.duration = 5000;
         config.verticalPosition = 'top';
         this.snackBar.open(message, 'Close', config);
+    }
+
+    splitNameAndSurname(input: string): { name: string, surname: string } {
+        const words = input.split(' ');
+        const surname = words.pop() || '';
+        const name = words.join(' ');
+        return { name, surname };
     }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NetworkService } from './network.service';
+import {Profile} from "../models/profile.model";
 
 @Injectable({
     providedIn: 'root'
@@ -9,26 +10,29 @@ export class ProfileService {
     constructor(private network: NetworkService) { }
 
     getMyProfile(callback?: (response: any) => void, errorCallback?: (error: any) => void) {
-        return this.network.post('/profile/v1/get-my-profile', {}, callback, errorCallback);
+        this.network.get('/profile/v1', (response) => {
+            const profile = new Profile(response);
+            if (callback) callback(profile);
+        }, errorCallback);
     }
 
     getProfile(username: any, callback?: (response: any) => void, errorCallback?: (error: any) => void) {
-        return this.network.post('/profile/v1/get-profile', { username }, callback, errorCallback);
+        this.network.post('/profile/v1', { username }, callback, errorCallback);
     }
 
-    changeBiography(biography: any, callback?: (response: any) => void, errorCallback?: (error: any) => void) {
-        return this.network.post('/profile/v1/change-biography', { biography }, callback, errorCallback);
+    changeBiography(biography: any) {
+        return this.network.put('/profile/v1/change-biography', { "biography": biography });
     }
 
-    changePrivate(isPrivate: any, callback?: (response: any) => void, errorCallback?: (error: any) => void) {
-        return this.network.post('/profile/v1/change-is-private', { isPrivate }, callback, errorCallback);
+    changePrivate(isPrivate: any) {
+        return this.network.post('/profile/v1/change-is-private', { "isPrivate": isPrivate });
     }
 
-    changeBackgroundImage(backgroundImage: any, callback?: (response: any) => void, errorCallback?: (error: any) => void) {
-        return this.network.post('/profile/v1/change-background-image', { backgroundImage }, callback, errorCallback);
+    changeBackgroundImage(backgroundImage: any) {
+        return this.network.post('/profile/v1/change-background-image', { "backgroundImage": backgroundImage });
     }
 
-    deleteBackgroundImage(callback?: (response: any) => void, errorCallback?: (error: any) => void) {
-        return this.network.post('/profile/v1/delete-background-image', { }, callback, errorCallback);
+    deleteBackgroundImage() {
+        return this.network.post('/profile/v1/delete-background-image', {});
     }
 }

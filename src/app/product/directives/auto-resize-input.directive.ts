@@ -5,7 +5,7 @@ import {Directive, ElementRef, HostListener, Input, OnChanges, SimpleChanges} fr
     selector: '[appAutoResizeInput]'
 })
 export class AutoResizeInputDirective implements OnChanges {
-    @Input('firstLength') firstLength= 0;
+    @Input('firstLength') firstLength: number | undefined = 0;
 
     constructor(private el: ElementRef) {}
 
@@ -23,7 +23,7 @@ export class AutoResizeInputDirective implements OnChanges {
         if (valueLength < 3) {
             inputElement.style.width = 5 + 'ch';
         } else {
-            inputElement.style.width = valueLength > 0 ? `${valueLength}ch` : this.firstLength + 'ch';
+            inputElement.style.width = valueLength + 2 + 'ch';
         }
     }
 }

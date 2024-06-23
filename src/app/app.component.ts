@@ -5,6 +5,8 @@ import {DOCUMENT} from "@angular/common";
 import {AuthService} from "./core/services/auth.service";
 import {HeaderComponent} from "./product/components/header/header.component";
 import {SplashComponent} from "./product/pages/splash/splash.component";
+import {ProfileService} from "./product/services/profile.service";
+import {ProfileStore} from "./product/stores/profile.store";
 
 @Component({
     selector: 'app-root',
@@ -16,17 +18,22 @@ import {SplashComponent} from "./product/pages/splash/splash.component";
 export class AppComponent implements OnInit {
     title = 'regms';
 
-    constructor(protected themeService: ThemeService, @Inject(DOCUMENT) protected document: Document, private authService: AuthService) {
+    constructor(protected themeService: ThemeService,
+                @Inject(DOCUMENT) protected document: Document,
+                private authService: AuthService,
+                private profileStore: ProfileStore,
+    ) {
         document.body.setAttribute('data-theme', themeService.getIsDarkTheme() ? "dark" : "light");
         document.body.style.backgroundColor = 'var(--background-color)';
     }
 
     ngOnInit() {
+        if (this.isLoggedIn()) {
+            this.profileStore.saveMyProfile();
+        }
     }
 
     public isLoggedIn(): boolean {
         return this.authService.isLoggedIn;
     }
-
-    protected readonly AuthService = AuthService;
 }

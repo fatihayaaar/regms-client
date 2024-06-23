@@ -11,6 +11,7 @@ import {AuthService} from "../services/auth.service";
     providedIn: 'root'
 })
 export class AuthGuard extends KeycloakAuthGuard {
+
     constructor(
         protected override readonly router: Router,
         protected readonly authService: AuthService,
@@ -23,10 +24,12 @@ export class AuthGuard extends KeycloakAuthGuard {
         state: RouterStateSnapshot
     ) {
         if (!this.authenticated) {
-            this.authService.login(state.url, false);
+            await this.authService.login(state.url, false);
         }
         const {roles: requiredRoles} = route.data;
+
         console.log(this.authService.getKeycloak().getToken());
+
         if (!Array.isArray(requiredRoles) || requiredRoles.length === 0) {
             return true;
         }

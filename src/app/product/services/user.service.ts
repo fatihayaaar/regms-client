@@ -9,27 +9,27 @@ export class UserService {
     constructor(private network: NetworkService) {
     }
 
-    changeUsername(username: string, callback?: (response: any) => void, errorCallback?: (error: any) => void) {
-        return this.network.post('/user/v1/change-username', {username}, callback, errorCallback);
+    changeUsername(username: any) {
+        return this.network.post('/user/v1/change-username', {"uid": username});
     }
 
-    changeEmailAddress(email: string, callback?: (response: any) => void, errorCallback?: (error: any) => void) {
-        return this.network.post('/user/v1/change-email', {email}, callback, errorCallback);
+    changeEmailAddress(email: string) {
+        return this.network.post('/user/v1/change-email', {"email": email});
     }
 
-    changeName(name: string, callback?: (response: any) => void, errorCallback?: (error: any) => void) {
-        return this.network.post('/user/v1/change-name', {name}, callback, errorCallback);
+    changeName(name: string) {
+        return this.network.post('/user/v1/change-name', {"name": name});
     }
 
-    changeSurname(surname: string, callback?: (response: any) => void, errorCallback?: (error: any) => void) {
-        return this.network.post('/user/v1/change-surname', {surname}, callback, errorCallback);
+    changeSurname(surname: string) {
+        return this.network.post('/user/v1/change-surname', {"surname": surname});
     }
 
-    changeJpegPhoto(photo: string, callback?: (response: any) => void, errorCallback?: (error: any) => void) {
-        return this.network.post('/user/v1/change-jpeg-photo', {photo}, callback, errorCallback);
+    changeAvatar(avatar: string) {
+        return this.network.post('/user/v1/change-avatar', {"avatar": avatar});
     }
 
-    deleteJpegPhoto(callback?: (response: any) => void, errorCallback?: (error: any) => void) {
-        return this.network.post('/user/v1/delete-jpeg-photo', {}, callback, errorCallback);
+    deleteAvatar() {
+        return this.network.post('/user/v1/delete-avatar', {});
     }
 }
