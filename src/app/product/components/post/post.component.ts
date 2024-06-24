@@ -6,7 +6,7 @@ import {DropdownMenuComponent} from "../dropdown-menu/dropdown-menu.component";
 import {NgClass, NgStyle} from "@angular/common";
 import {Post} from "../../models/post.model";
 import {RouterLink} from "@angular/router";
-import {formatRelativeDate} from "../../../core/utils/date-util";
+import {formatRelativeDate} from "../../../core/utils/date.util";
 
 @Component({
   selector: 'app-post',
