@@ -4,28 +4,32 @@
             <img [src]="this.profile!.backgroundImage" class="card-img-top" alt="Background Image">
         }
         @if (this.isEditModeBoxVisible) {
-           <app-photo-options-menu (imageChanged)="onBackgroundImageChanged($event)" [isProfilePhoto]="false" id="background-photo-menu"></app-photo-options-menu>
+            <app-photo-options-menu (imageChanged)="onBackgroundImageChanged($event)" [isProfilePhoto]="false"
+                                    id="background-photo-menu"></app-photo-options-menu>
         }
     </div>
     <div class="profile-img-container position-absolute">
-        <app-avatar [width]="160" [height]="160" [imgSrc]="this.profile?.avatar"></app-avatar>
+        <app-avatar [height]="160" [imgSrc]="this.profile?.avatar" [width]="160"></app-avatar>
 
         @if (this.isEditModeBoxVisible) {
-            <app-photo-options-menu (imageChanged)="onProfileImageChanged($event)" [isProfilePhoto]="true" id="profile-photo-menu"></app-photo-options-menu>
+            <app-photo-options-menu (imageChanged)="onProfileImageChanged($event)" [isProfilePhoto]="true"
+                                    id="profile-photo-menu"></app-photo-options-menu>
         }
     </div>
     <div class="text-center">
         <div class="card-container">
             @if (this.isEditModeBoxVisible) {
                 <p class="card-title card-text">
-                    <input [(ngModel)]="fullname" [firstLength]="this.fullname.length" appAutoResizeInput class="card-title card-text profile-input" />
+                    <input [(ngModel)]="this.fullname" [firstLength]="this.fullname.length" appAutoResizeInput
+                           class="card-title card-text profile-input"/>
                 </p>
-            }  @else {
+            } @else {
                 <p class="card-title card-text text-padding">{{ this.fullname }}</p>
             }
             @if (this.isEditModeBoxVisible) {
                 <p class="card-text">
-                    <input [(ngModel)]="this.profile!.username" [firstLength]="this.profile!.username.length" appAutoResizeInput class="profile-input" />
+                    <input [(ngModel)]="this.profile!.username" [firstLength]="this.profile!.username.length"
+                           appAutoResizeInput class="profile-input"/>
                 </p>
             } @else {
                 <p class="card-text text-padding">{{ this.profile!.username }}</p>
@@ -33,18 +37,22 @@
         </div>
         <div class="biography-container">
             @if (this.isEditModeBoxVisible) {
-                <input [(ngModel)]="this.profile!.biography" [firstLength]="this.profile?.biography?.length" appAutoResizeInput class="profile-input" />
+                <input [(ngModel)]="this.profile!.biography" [firstLength]="this.profile?.biography?.length"
+                       appAutoResizeInput class="profile-input"/>
             } @else {
                 <p class="biography-text card-text text-padding">{{ this.profile?.biography }}</p>
             }
         </div>
         <div class="text-center">
-            <button class="btn btn-primary btn-send" (click)="editProfileOnclick()">
-                {{ this.buttonText }}
-            </button>
-            <button *ngIf="isEditModeBoxVisible" class="btn btn-secondary btn-send cancel-btn" (click)="cancelEdit()">
-                Cancel
-            </button>
+            @if (this.isMyProfile) {
+                <button (click)="editProfileOnclick()" class="btn btn-primary btn-send">
+                    {{ this.buttonText }}
+                </button>
+                <button (click)="cancelEdit()" *ngIf="isEditModeBoxVisible"
+                        class="btn btn-secondary btn-send cancel-btn">
+                    Cancel
+                </button>
+            }
         </div>
     </div>
     <br>

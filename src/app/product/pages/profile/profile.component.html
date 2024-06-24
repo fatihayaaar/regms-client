@@ -1,18 +1,20 @@
 <div class="content-container">
-  <div class="row justify-content-center">
-    <div class="col-md-9 profile-container">
-        <app-profile-card></app-profile-card>
-        <div class="post-send-box">
-            <app-post-send-box></app-post-send-box>
-        </div>
-        @for (item of this.posts; track item.username) {
-            <app-post [post]="item" [customStyle]="{'margin': '0 10% 0 10%'}"></app-post>
-        } @empty {
+    <div class="row justify-content-center">
+        <div class="col-md-9 profile-container">
+            <app-profile-card [isMyProfile]="this.isMyProfile" [username]="this.username"></app-profile-card>
+            @if (this.isMyProfile) {
+                <div class="post-send-box">
+                    <app-post-send-box></app-post-send-box>
+                </div>
+            }
+            @for (item of this.posts; track item.username) {
+                <app-post [post]="item" [customStyle]="{'margin': '0 10% 0 10%'}"></app-post>
+            } @empty {
 
-        }
+            }
+        </div>
+        <div class="col">
+            <app-footer></app-footer>
+        </div>
     </div>
-    <div class="col">
-        <app-footer></app-footer>
-    </div>
-  </div>
 </div>

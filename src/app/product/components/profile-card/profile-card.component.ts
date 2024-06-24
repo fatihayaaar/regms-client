@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AvatarComponent} from "../avatar/avatar.component";
 import {FormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
@@ -20,6 +20,9 @@ import * as _ from 'lodash';
 })
 export class ProfileCardComponent implements OnInit {
 
+    @Input() isMyProfile: boolean = false;
+    @Input() username: string = '';
+
     profile?: Profile;
     originalProfile?: Profile;
     fullname: string = "null null";
@@ -34,12 +37,23 @@ export class ProfileCardComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.profile = this.profileStore.getMyProfile();
-        this.originalProfile = _.cloneDeep(this.profile);
-        this.fullname = `${this.profile!.name} ${this.profile!.surname}`;
+        if (this.isMyProfile) {
+            this.profile = this.profileStore.getMyProfile();
+            this.originalProfile = _.cloneDeep(this.profile);
+            this.fullname = `${this.profile!.name} ${this.profile!.surname}`;
+        } else {
+            this.profileService.getProfile(this.username, (response) => {
+                this.profile = new Profile(response);
+                this.fullname = `${this.profile!.name} ${this.profile!.surname}`;
+            });
+        }
     }
 
     editProfileOnclick() {
+        if (!this.isMyProfile) {
+            return;
+        }
+
         if (this.isEditModeBoxVisible) {
             this.saveProfileDetail();
         } else {
@@ -56,6 +70,10 @@ export class ProfileCardComponent implements OnInit {
     }
 
     saveProfileDetail() {
+        if (!this.isMyProfile) {
+            return;
+        }
+
         if (!this.profile!.username || this.profile!.username.trim() === '') {
             this.showError("Username cannot be empty.");
             return;

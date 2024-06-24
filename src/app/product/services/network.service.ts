@@ -13,7 +13,7 @@ export class NetworkService {
     constructor(private http: HttpClient) {
     }
 
-    get(url: string, callback?: (response: any) => void, errorCallback?: (error: any) => void) {
+    async get(url: string, callback?: (response: any) => void, errorCallback?: (error: any) => void) {
         const fullUrl = `${this.API}${url}`;
         this.http.get(fullUrl).pipe(
             map(response => {

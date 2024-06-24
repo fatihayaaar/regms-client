@@ -1,6 +1,7 @@
 import {Injectable, OnInit} from "@angular/core";
 import {KeycloakService} from "keycloak-angular";
 import {KeycloakProfile} from "keycloak-js";
+import {ProfileStore} from "../../product/stores/profile.store";
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +10,7 @@ export class AuthService implements OnInit {
     public isLoggedIn = this.keycloak.isLoggedIn();
     public userDetail: KeycloakProfile | null = null;
 
-    constructor(private keycloak: KeycloakService) {
+    constructor(private keycloak: KeycloakService, private profileStore: ProfileStore) {
     }
 
     public async ngOnInit() {
@@ -17,6 +18,7 @@ export class AuthService implements OnInit {
 
         if (this.isLoggedIn) {
             this.userDetail = await this.keycloak.loadUserProfile();
+            this.profileStore.saveMyProfile();
         }
     }
 

@@ -16,8 +16,11 @@ export class ProfileService {
         }, errorCallback);
     }
 
-    getProfile(username: any, callback?: (response: any) => void, errorCallback?: (error: any) => void) {
-        this.network.post('/profile/v1', { username }, callback, errorCallback);
+    getProfile(username: string, callback?: (response: any) => void, errorCallback?: (error: any) => void) {
+        this.network.get(`/profile/v1/${username}`, (response) => {
+            const profile = new Profile(response);
+            if (callback) callback(profile);
+        });
     }
 
     changeBiography(biography: any) {

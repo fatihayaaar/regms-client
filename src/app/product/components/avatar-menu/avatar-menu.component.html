@@ -1,5 +1,5 @@
 <div class="col">
-    <div class="row" [routerLink]="['/profile']">
+    <div class="row" [routerLink]="['/profile']" [queryParams]="{ isMyProfile: true, username: '' }">
         <div class="col list-content-container">
             <i class="bi bi-person item-icon"></i>
             <p class="list-text">Profile</p>
