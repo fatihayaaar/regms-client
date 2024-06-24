@@ -12,3 +12,12 @@
 .post-send-box {
   margin: 0 10% 10px 10%;
 }
+.no-post {
+  margin:50px 0 50px 0;
+  font-family: var(--font);
+  font-weight: 300;
+  font-style: normal;
+  font-size: 1em;
+  text-align: center;
+  color: var(--header-secondary-text-color);
+}

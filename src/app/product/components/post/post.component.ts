@@ -5,6 +5,8 @@ import {AvatarComponent} from "../avatar/avatar.component";
 import {DropdownMenuComponent} from "../dropdown-menu/dropdown-menu.component";
 import {NgClass, NgStyle} from "@angular/common";
 import {Post} from "../../models/post.model";
+import {RouterLink} from "@angular/router";
+import {formatRelativeDate} from "../../../core/utils/date-util";
 
 @Component({
   selector: 'app-post',
@@ -16,6 +18,7 @@ import {Post} from "../../models/post.model";
     DropdownMenuComponent,
     NgStyle,
     NgClass,
+    RouterLink,
   ]
 })
 export class PostComponent {
@@ -43,4 +46,6 @@ export class PostComponent {
       }
     });
   }
+
+  protected readonly formatRelativeDate = formatRelativeDate;
 }

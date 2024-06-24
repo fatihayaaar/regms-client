@@ -9,9 +9,9 @@ export interface Post {
   commentCount?: number;
   visible?: boolean;
   isDeleted?: boolean;
-
   username?: string;
-  avatarUrl?: string;
+  avatar?: string;
+
   mediasUrl?: string[];
   content?: string;
 }

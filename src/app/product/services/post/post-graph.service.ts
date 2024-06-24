@@ -57,11 +57,50 @@ export class PostGraphService {
                 {
                   getPosts {
                     id
-                    title
-                    content
+                    text
+                    uri
+                    username
+                    avatar
+                    createdDate
                   }
                 }
             `,
+        });
+    }
+
+    getMyPosts(): Observable<any> {
+        return this.apollo.query({
+            query: gql`
+                {
+                  getMyPosts {
+                    id
+                    text
+                    uri
+                    username
+                    avatar
+                    createdDate
+                  }
+                }
+            `,
+        });
+    }
+
+    getPostsByUsername(username: String): Observable<any> {
+        return this.apollo.query({
+            query: gql`
+                 query GetPostsByUsername($username: String!) {
+                  getPostsByUsername(username: $username) {
+                    id
+                    text
+                    uri
+                    username
+                    avatar
+                    createdDate
+                  }
+                }
+            `, variables: {
+                username: username,
+            }
         });
     }
 

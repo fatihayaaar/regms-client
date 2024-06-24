@@ -1,9 +1,12 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Post} from "../../models/post.model";
 import {FooterComponent} from "../../components/footer/footer.component";
 import {ClickableListComponent} from "../../components/clickable-list/clickable-list.component";
 import {PostComponent} from "../../components/post/post.component";
 import {TrendsListComponent} from "../../components/trends-list/trends-list.component";
+import {PostService} from "../../services/post/post.service";
+import {Observable} from "rxjs";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
   selector: 'home',
@@ -14,11 +17,18 @@ import {TrendsListComponent} from "../../components/trends-list/trends-list.comp
     ClickableListComponent,
     FooterComponent,
     PostComponent,
-    TrendsListComponent
+    TrendsListComponent,
+    AsyncPipe
   ]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
-  posts: Post[] = [
-  ];
+  posts$: Observable<Post[]> = new Observable<Post[]>();
+
+  constructor(private postService: PostService) {
+  }
+
+  ngOnInit(): void {
+    this.posts$ = this.postService.getPosts();
+  }
 }

@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
     logoPath: string = "";
     fullname: string = "";
     username: string = "";
-    jpegPhoto?: string;
+    avatar?: string;
 
     constructor(
         private router: Router,
@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit {
             this.logoPath = this.themeService.getLogoPath();
         });
 
-        this.jpegPhoto = this.profileStore.getAvatar();
+        this.avatar = this.profileStore.getAvatar();
     }
 
     toggleDropdown(status: boolean) {

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { PostGraphService } from './post-graph.service';
 import {Post} from "../../models/post.model";
+import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root',
@@ -12,7 +14,6 @@ export class PostService {
         this.graphqlService.createPost(post).subscribe(
             (result) => {
                 console.log('Post created:', result.data);
-                this.getPosts();
                 if (callback) callback();
             },
             (error) => {
@@ -25,7 +26,6 @@ export class PostService {
         this.graphqlService.deletePost(id).subscribe(
             (result) => {
                 console.log('Post deleted:', result.data);
-                this.getPosts();
                 if (callback) callback();
             },
             (error) => {
@@ -38,7 +38,6 @@ export class PostService {
         this.graphqlService.updatePost(post).subscribe(
             (result) => {
                 console.log('Post updated:', result.data);
-                this.getPosts();
                 if (callback) callback();
             },
             (error) => {
@@ -47,25 +46,27 @@ export class PostService {
         );
     }
 
-    getPosts() {
-        this.graphqlService.getPosts().subscribe(
-            (result) => {
-                return result.data.getPosts;
-            },
-            (error) => {
-                console.error('Error fetching posts:', error);
-            }
+    getPosts(): Observable<Post[]> {
+        return this.graphqlService.getPosts().pipe(
+            map(result => result.data.getPosts)
         );
     }
 
-    getPostById(id: string) {
-        this.graphqlService.getPostById(id).subscribe(
-            (result) => {
-                return result.data.getPostById;
-            },
-            (error) => {
-                console.error('Error fetching post:', error);
-            }
+    getMyPosts(): Observable<Post[]> {
+        return this.graphqlService.getMyPosts().pipe(
+            map(result => result.data.getMyPosts)
+        );
+    }
+
+    getPostsByUsername(username: string): Observable<Post[]> {
+        return this.graphqlService.getPostsByUsername(username).pipe(
+            map(result => result.data.getPostsByUsername)
+        );
+    }
+
+    getPostById(id: string): Observable<Post> {
+        return this.graphqlService.getPostById(id).pipe(
+            map(result => result.data.getPostById)
         );
     }
 }

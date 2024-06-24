@@ -10,6 +10,8 @@ import {Profile} from "../../models/profile.model";
 import {DropdownMenuComponent} from "../photo-options-menu/photo-options-menu.component";
 import {ProfileStore} from "../../stores/profile.store";
 import * as _ from 'lodash';
+import {filter} from "rxjs";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
 @Component({
     selector: 'app-profile-card',
@@ -33,10 +35,25 @@ export class ProfileCardComponent implements OnInit {
                 private profileService: ProfileService,
                 private profileStore: ProfileStore,
                 private snackBar: MatSnackBar,
+                private router: Router,
+                private route: ActivatedRoute,
     ) {
+        this.router.events.pipe(
+            filter(event => event instanceof NavigationEnd)
+        ).subscribe(event => {
+            const navEndEvent = event as NavigationEnd;
+            if (navEndEvent.urlAfterRedirects.startsWith('/profile')) {
+                this.route.queryParams.subscribe(params => {
+                    this.isMyProfile = params['isMyProfile'] === 'true';
+                    this.username = params['username'] || '';
+                    this.ngOnInit();
+                });
+            }
+        });
     }
 
     ngOnInit() {
+        if (this.profileStore.getMyProfile().username == this.username) this.isMyProfile = true;
         if (this.isMyProfile) {
             this.profile = this.profileStore.getMyProfile();
             this.originalProfile = _.cloneDeep(this.profile);

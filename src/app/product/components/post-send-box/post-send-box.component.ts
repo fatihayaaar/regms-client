@@ -5,6 +5,8 @@ import {Post} from "../../models/post.model";
 import {FormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
 import {ProfileStore} from "../../stores/profile.store";
+import {MatDialog} from "@angular/material/dialog";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-post-send-box',
@@ -19,7 +21,12 @@ export class PostSendBoxComponent implements OnInit {
     errorMessage: string | null = null;
     jpegPhoto?: string;
 
-    constructor(private postService: PostService, private profileStore: ProfileStore) {
+    constructor(
+        private postService: PostService,
+        private profileStore: ProfileStore,
+        public dialog: MatDialog,
+        private snackBar: MatSnackBar,
+    ) {
     }
 
     ngOnInit(): void {
@@ -55,8 +62,14 @@ export class PostSendBoxComponent implements OnInit {
     }
 
     resetForm() {
-        this.text = '';
-        this.selectedFile = null;
-        this.errorMessage = null;
+        this.dialog.closeAll();
+        this.showSuccess("Successful");
+    }
+
+    showSuccess(message: string) {
+        const config = new MatSnackBarConfig();
+        config.duration = 5000;
+        config.verticalPosition = 'top';
+        this.snackBar.open(message, 'Close', config);
     }
 }
