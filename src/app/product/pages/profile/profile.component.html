@@ -7,7 +7,7 @@
                     <app-post-send-box></app-post-send-box>
                 </div>
             }
-            @for (item of this.posts$ | async; track item.username) {
+            @for (item of this.posts; track item.username) {
                 <app-post [post]="item" [customStyle]="{'margin': '0 10% 0 10%'}"></app-post>
             } @empty {
                 <p class="no-post">Henüz Paylaşım Yapılmamış</p>

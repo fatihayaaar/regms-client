@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit {
     @Input() isMyProfile: boolean = false;
     @Input() username: string = '';
 
-    posts$: Observable<Post[]> = new Observable<Post[]>();
+    posts: Post[] = [];
 
     constructor(private router: Router, private route: ActivatedRoute, private profileStore: ProfileStore, private postService : PostService) {
         this.router.events.pipe(
@@ -40,7 +40,6 @@ export class ProfileComponent implements OnInit {
             const navEndEvent = event as NavigationEnd;
             if (navEndEvent.urlAfterRedirects.startsWith('/profile')) {
                 this.ngOnInit();
-                console.log('Profile navigated. isMyProfile:', this.isMyProfile, 'Username:', this.username);
             }
         });
     }
@@ -50,13 +49,16 @@ export class ProfileComponent implements OnInit {
             this.isMyProfile = params['isMyProfile'] === 'true';
             this.username = params['username'];
         });
-        if (this.profileStore.getMyProfile().username == this.username) {
-            this.isMyProfile = true;
-        }
+        this.profileStore.profile$.subscribe(profile => {
+            if (profile!.username == this.username) {
+                this.isMyProfile = true;
+            }
+        });
+        this.postService.currentPosts.subscribe(posts => this.posts = posts);
         if (this.isMyProfile) {
-            this.posts$ = this.postService.getMyPosts();
+            this.postService.getMyPosts().subscribe(posts => this.postService.setPosts(posts));
         } else {
-            this.posts$ = this.postService.getPostsByUsername(this.username);
+            this.postService.getPostsByUsername(this.username).subscribe(posts => this.postService.setPosts(posts));
         }
     }
 }

@@ -1,19 +1,30 @@
 import { Injectable } from '@angular/core';
 import { PostGraphService } from './post-graph.service';
 import {Post} from "../../models/post.model";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import {ProfileStore} from "../../stores/profile.store";
 
 @Injectable({
     providedIn: 'root',
 })
 export class PostService {
-    constructor(private graphqlService: PostGraphService) {}
+    private postsSource = new BehaviorSubject<Post[]>([]);
+    currentPosts = this.postsSource.asObservable();
+
+    constructor(private graphqlService: PostGraphService, private profileStore: ProfileStore) {}
+
+    setPosts(posts: Post[]) {
+        this.postsSource.next(posts);
+    }
 
     createPost(post: Post, callback?: () => void) {
         this.graphqlService.createPost(post).subscribe(
             (result) => {
-                console.log('Post created:', result.data);
+                let localPost = result.data.createPost;
+                localPost.avatar = this.profileStore.getAvatar();
+                localPost.username = this.profileStore.getMyProfile()?.username;
+                this.postsSource.next([result.data.createPost, ...this.postsSource.value]);
                 if (callback) callback();
             },
             (error) => {
@@ -22,8 +33,8 @@ export class PostService {
         );
     }
 
-    deletePost(id: string, callback?: () => void) {
-        this.graphqlService.deletePost(id).subscribe(
+    deletePost(post: any, callback?: () => void) {
+        this.graphqlService.deletePost(post).subscribe(
             (result) => {
                 console.log('Post deleted:', result.data);
                 if (callback) callback();

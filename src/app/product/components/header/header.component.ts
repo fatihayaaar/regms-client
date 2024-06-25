@@ -6,7 +6,6 @@ import {DOCUMENT} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
 import {UploadDialogComponent} from "../upload-dialog/upload-dialog.component";
 import {ThemeService} from "../../../core/services/theme.service";
-import {ProfileService} from "../../services/profile.service";
 import {ProfileStore} from "../../stores/profile.store";
 
 declare var bootstrap: any;
@@ -25,7 +24,7 @@ export class HeaderComponent implements OnInit {
     logoPath: string = "";
     fullname: string = "";
     username: string = "";
-    avatar?: string;
+    avatar?: string = "";
 
     constructor(
         private router: Router,
@@ -50,7 +49,9 @@ export class HeaderComponent implements OnInit {
             this.logoPath = this.themeService.getLogoPath();
         });
 
-        this.avatar = this.profileStore.getAvatar();
+        this.profileStore.profile$.subscribe(profile => {
+            this.avatar = profile?.avatar;
+        });
     }
 
     toggleDropdown(status: boolean) {

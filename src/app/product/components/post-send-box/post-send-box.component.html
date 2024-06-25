@@ -1,7 +1,7 @@
 <div class="card border-0">
     <div class="card-body">
         <div class="col" style="display: flex;">
-            <app-avatar [imgSrc]="this.jpegPhoto"></app-avatar>
+            <app-avatar [imgSrc]="this.avatar"></app-avatar>
             <div style="flex: 1;">
                 <textarea [(ngModel)]="text" class="form-control" placeholder="What's on your mind?" rows="1" style="resize: none; flex: 1;"></textarea>
                 <div class="mb-3" *ngIf="selectedFile">

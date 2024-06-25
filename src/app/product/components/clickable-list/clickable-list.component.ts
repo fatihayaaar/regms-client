@@ -8,8 +8,6 @@ import {Component, EventEmitter} from '@angular/core';
 })
 export class ClickableListComponent {
 
-    items: string[] = ["Home", "Following", "Settings", "Profile",];
-
     itemClicked = new EventEmitter<string>();
     selectedItem: string | undefined;
 

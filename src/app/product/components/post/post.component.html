@@ -1,7 +1,7 @@
-<div class="card post-content post" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)">
+<a class="card post-content post" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)" [routerLink]="['/post']" [queryParams]="{ post: JSON.stringify(this.post!)}">
   <div class="d-flex align-items-start" [ngStyle]="customStyle">
     <a class="avatar-container" [routerLink]="['/profile']" [queryParams]="{ isMyProfile: false, username: this.post!.username }">
-      <app-avatar [imgSrc]="this.post!.avatar" ></app-avatar>
+      <app-avatar [imgSrc]="this.avatar" ></app-avatar>
     </a>
     <span class="flex-grow-1">
       <div class="border-0 pb-0 post-header">
@@ -10,7 +10,7 @@
             <div>
               <div class="nav nav-divider">
                 <h6 class="nav-item card-title mb-0">
-                  <a href="" class="username-content">{{ this.post?.username }}</a>
+                  <a href="" class="username-content" [routerLink]="['/profile']" [queryParams]="{ isMyProfile: false, username: this.post!.username }">{{ this.post?.username }}</a>
                   <span class="nav-item small post-date-item">{{ formatRelativeDate(this.post!.createdDate!) }}</span>
                 </h6>
               </div>
@@ -18,7 +18,7 @@
           </div>
           <div>
             <span class="nav-item">
-              <app-dropdown-menu></app-dropdown-menu>
+              <app-dropdown-menu [postId]="this.post!.id!" [isMyPost]="this.isMyPost"></app-dropdown-menu>
             </span>
           </div>
         </div>
@@ -26,7 +26,7 @@
       <div class="card-body">
         <p class="text-content"> {{ this.post?.text }}</p>
         @if (this.post!.uri != null && this.post!.uri != "") {
-          <div class="img-container" (click)="openImageDialog(this.post!.uri)" [ngStyle]="{ '--bg-image': 'url(' + (this.post!.uri || 'default_image_url') + ')' }">
+          <div class="img-container" (click)="openImageDialog($event, this.post!.uri)" [ngStyle]="{ '--bg-image': 'url(' + (this.post!.uri || 'default_image_url') + ')' }">
             <div class="img-content">
               <img src="{{ this.post!.uri }}" alt="Image" style="max-height: 600px; max-width: 100%">
             </div>
@@ -50,4 +50,4 @@
       </div>
     </span>
   </div>
-</div>
+</a>

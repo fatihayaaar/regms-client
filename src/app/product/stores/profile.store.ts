@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Profile } from "../models/profile.model";
 import { ProfileService } from "../services/profile.service";
 
@@ -7,80 +8,78 @@ import { ProfileService } from "../services/profile.service";
 })
 export class ProfileStore {
     private storageKey = 'profile';
+    private profileSubject: BehaviorSubject<Profile | null>;
+    public profile$: Observable<Profile | null>;
 
     constructor(private profileService: ProfileService) {
+        const storedProfile = localStorage.getItem(this.storageKey);
+        this.profileSubject = new BehaviorSubject<Profile | null>(storedProfile ? JSON.parse(storedProfile) : null);
+        this.profile$ = this.profileSubject.asObservable();
     }
 
     saveMyProfile(): void {
-        let profile;
         this.profileService.getMyProfile((response) => {
-            profile = new Profile(response);
+            const profile = new Profile(response);
             localStorage.setItem(this.storageKey, JSON.stringify(profile));
+            this.profileSubject.next(profile);
         });
     }
 
-    getMyProfile(): Profile {
-        let profile = localStorage.getItem(this.storageKey);
-        return profile ? JSON.parse(profile) : Profile;
+    getMyProfile(): Profile | null {
+        return this.profileSubject.value;
     }
 
     deleteMyProfile(): void {
         localStorage.removeItem(this.storageKey);
+        this.profileSubject.next(null);
     }
 
-    getAvatar() {
-        return this.getMyProfile().avatar;
+    getAvatar(): string | undefined {
+        return this.getMyProfile()?.avatar;
     }
 
     updateBiography(newBiography: string): void {
-        let profile = this.getMyProfile();
-        profile.biography = newBiography;
-        this.saveUpdatedProfile(profile);
+        this.updateProfileField('biography', newBiography);
     }
 
     updateNotificationsEnabled(enabled: boolean): void {
-        let profile = this.getMyProfile();
-        profile.notificationsEnabled = enabled;
-        this.saveUpdatedProfile(profile);
+        this.updateProfileField('notificationsEnabled', enabled);
     }
 
     updateBackgroundImage(newBackgroundImage: string): void {
-        let profile = this.getMyProfile();
-        profile.backgroundImage = newBackgroundImage;
-        this.saveUpdatedProfile(profile);
+        this.updateProfileField('backgroundImage', newBackgroundImage);
     }
 
     updateUsername(newUsername: string): void {
-        let profile = this.getMyProfile();
-        profile.username = newUsername;
-        this.saveUpdatedProfile(profile);
+        this.updateProfileField('username', newUsername);
     }
 
     updateAvatar(avatar: string): void {
-        let profile = this.getMyProfile();
-        profile.avatar = avatar;
-        this.saveUpdatedProfile(profile);
+        this.updateProfileField('avatar', avatar);
     }
 
     updateName(newName: string): void {
-        let profile = this.getMyProfile();
-        profile.name = newName;
-        this.saveUpdatedProfile(profile);
+        this.updateProfileField('name', newName);
     }
 
     updateSurname(newSurname: string): void {
-        let profile = this.getMyProfile();
-        profile.surname = newSurname;
-        this.saveUpdatedProfile(profile);
+        this.updateProfileField('surname', newSurname);
     }
 
     updatePrivate(newPrivate: boolean): void {
-        let profile = this.getMyProfile();
-        profile.private = newPrivate;
-        this.saveUpdatedProfile(profile);
+        this.updateProfileField('private', newPrivate);
+    }
+
+    private updateProfileField<K extends keyof Profile>(field: K, value: Profile[K]): void {
+        const profile = this.getMyProfile();
+        if (profile) {
+            profile[field] = value;
+            this.saveUpdatedProfile(profile);
+        }
     }
 
     private saveUpdatedProfile(profile: Profile): void {
         localStorage.setItem(this.storageKey, JSON.stringify(profile));
+        this.profileSubject.next(profile);
     }
 }

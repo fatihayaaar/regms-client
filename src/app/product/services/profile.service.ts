@@ -32,10 +32,10 @@ export class ProfileService {
     }
 
     changeBackgroundImage(backgroundImage: any) {
-        return this.network.post('/profile/v1/change-background-image', { "backgroundImage": backgroundImage });
+        return this.network.put('/profile/v1/change-background-image', { "backgroundImage": backgroundImage });
     }
 
     deleteBackgroundImage() {
-        return this.network.post('/profile/v1/delete-background-image', {});
+        return this.network.put('/profile/v1/delete-background-image', {});
     }
 }

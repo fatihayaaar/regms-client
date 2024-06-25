@@ -8,15 +8,19 @@ import {Post} from "../../models/post.model";
 })
 export class PostGraphService {
 
-    constructor(private apollo: Apollo) {
-    }
+    constructor(private apollo: Apollo) {}
 
     createPost(post: Post) {
-        return this.apollo.mutate({
+        return this.apollo.mutate<any>({
             mutation: gql`
                 mutation CreatePost($post: PostDto!) {
                   createPost(post: $post) {
                     id
+                    text
+                    uri
+                    username
+                    avatar
+                    createdDate
                   }
                 }
             `, variables: {
@@ -25,14 +29,14 @@ export class PostGraphService {
         });
     }
 
-    deletePost(id: string) {
+    deletePost(post: Post) {
         return this.apollo.mutate({
             mutation: gql`
-                mutation DeletePost($id: String!) {
-                  delete(id: $id)
+                mutation DeletePost($post: PostDto!) {
+                  delete(post: $post)
                 }
             `, variables: {
-                id: id,
+                post: post,
             },
         });
     }

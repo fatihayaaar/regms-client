@@ -12,6 +12,7 @@ import {ProfileStore} from "../../stores/profile.store";
 import * as _ from 'lodash';
 import {filter} from "rxjs";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {profile} from "@apollo/client/testing/internal";
 
 @Component({
     selector: 'app-profile-card',
@@ -53,17 +54,19 @@ export class ProfileCardComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.profileStore.getMyProfile().username == this.username) this.isMyProfile = true;
-        if (this.isMyProfile) {
-            this.profile = this.profileStore.getMyProfile();
-            this.originalProfile = _.cloneDeep(this.profile);
-            this.fullname = `${this.profile!.name} ${this.profile!.surname}`;
-        } else {
-            this.profileService.getProfile(this.username, (response) => {
-                this.profile = new Profile(response);
+        this.profileStore.profile$.subscribe(profile => {
+            if (profile!.username == this.username) this.isMyProfile = true;
+            if (this.isMyProfile) {
+                this.profile = profile!;
+                this.originalProfile = _.cloneDeep(this.profile);
                 this.fullname = `${this.profile!.name} ${this.profile!.surname}`;
-            });
-        }
+            } else {
+                this.profileService.getProfile(this.username, (response) => {
+                    this.profile = new Profile(response);
+                    this.fullname = `${this.profile!.name} ${this.profile!.surname}`;
+                });
+            }
+        });
     }
 
     editProfileOnclick() {
@@ -235,7 +238,12 @@ export class ProfileCardComponent implements OnInit {
     deleteProfileImage() {
         this.userService.deleteAvatar().subscribe((response) => {
             if (response === true) {
+                this.profile!.avatar = "";
+                this.originalProfile!.avatar = this.profile!.avatar;
+                this.profileStore.updateAvatar(this.profile!.avatar);
                 this.showSuccess("Profile image updated successfully.");
+                this.buttonText = "Edit Profile";
+                this.isEditModeBoxVisible = false;
             } else {
                 this.showError("An error occurred while updating the profile image.");
             }
@@ -259,7 +267,12 @@ export class ProfileCardComponent implements OnInit {
     deleteBackgroundImage() {
         this.profileService.deleteBackgroundImage().subscribe((response) => {
             if (response === true) {
+                this.profile!.backgroundImage = "";
+                this.originalProfile!.backgroundImage = this.profile!.backgroundImage;
+                this.profileStore.updateBackgroundImage(this.profile!.backgroundImage!);
                 this.showSuccess("Background image updated successfully.");
+                this.buttonText = "Edit Profile";
+                this.isEditModeBoxVisible = false;
             } else {
                 this.showError("An error occurred while updating the background image.");
             }

@@ -19,7 +19,7 @@ export class PostSendBoxComponent implements OnInit {
     text: string = '';
     selectedFile: string | ArrayBuffer | null = null;
     errorMessage: string | null = null;
-    jpegPhoto?: string;
+    avatar?: string = "";
 
     constructor(
         private postService: PostService,
@@ -30,7 +30,9 @@ export class PostSendBoxComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.jpegPhoto = this.profileStore.getAvatar();
+        this.profileStore.profile$.subscribe(profile => {
+            this.avatar = profile?.avatar;
+        });
     }
 
     onFileSelected(event: Event) {
@@ -52,7 +54,8 @@ export class PostSendBoxComponent implements OnInit {
         }
 
         const post: Post = {
-            text: this.text, uri: this.selectedFile as string || ''
+            text: this.text,
+            uri: this.selectedFile as string || ''
         };
 
         this.postService.createPost(post, () => {
@@ -64,6 +67,9 @@ export class PostSendBoxComponent implements OnInit {
     resetForm() {
         this.dialog.closeAll();
         this.showSuccess("Successful");
+        this.text = '';
+        this.selectedFile = null;
+        this.errorMessage = null;
     }
 
     showSuccess(message: string) {

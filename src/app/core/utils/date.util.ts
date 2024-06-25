@@ -20,11 +20,13 @@ export function formatRelativeDate(dateString: string): string {
     const diffInMonths = Math.floor(diffInDays / 30);
     const diffInYears = Math.floor(diffInDays / 365);
 
-    if (diffInHours < 24) {
+    if (diffInMinutes < 1) {
+        return 'az önce';
+    } else if (diffInHours < 24) {
         const hours = Math.floor(diffInMinutes / 60);
         const minutes = diffInMinutes % 60;
         if (hours > 0) {
-            return `${hours} saat ${minutes} dakika önce`;
+            return `${hours} saat önce`;
         } else {
             return `${minutes} dakika önce`;
         }

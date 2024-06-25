@@ -1,7 +1,7 @@
 <div class="card profile-card">
     <div class="card-header position-relative">
-        @if (this.profile?.backgroundImage != null) {
-            <img [src]="this.profile!.backgroundImage" class="card-img-top" alt="Background Image">
+        @if (this.profile?.backgroundImage != null && this.profile?.backgroundImage != "") {
+            <img [src]="this.profile!.backgroundImage" class="card-img-top" alt="B">
         }
         @if (this.isEditModeBoxVisible) {
             <app-photo-options-menu (imageChanged)="onBackgroundImageChanged($event)" [isProfilePhoto]="false"

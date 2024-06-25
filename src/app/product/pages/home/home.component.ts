@@ -9,26 +9,21 @@ import {Observable} from "rxjs";
 import {AsyncPipe} from "@angular/common";
 
 @Component({
-  selector: 'home',
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
-  standalone: true,
-  imports: [
-    ClickableListComponent,
-    FooterComponent,
-    PostComponent,
-    TrendsListComponent,
-    AsyncPipe
-  ]
+    selector: 'home',
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss',
+    standalone: true,
+    imports: [ClickableListComponent, FooterComponent, PostComponent, TrendsListComponent, AsyncPipe]
 })
 export class HomeComponent implements OnInit {
 
-  posts$: Observable<Post[]> = new Observable<Post[]>();
+    posts: Post[] = [];
 
-  constructor(private postService: PostService) {
-  }
+    constructor(private postService: PostService) {
+    }
 
-  ngOnInit(): void {
-    this.posts$ = this.postService.getPosts();
-  }
+    ngOnInit(): void {
+        this.postService.currentPosts.subscribe(posts => this.posts = posts);
+        this.postService.getPosts().subscribe(posts => this.postService.setPosts(posts));
+    }
 }

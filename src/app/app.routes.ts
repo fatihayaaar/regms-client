@@ -5,6 +5,7 @@ import {HomeComponent} from "./product/pages/home/home.component";
 import {GuestGuard} from "./core/guard/quest-guard.service";
 import {StarterComponent} from "./product/pages/starter/starter.component";
 import {ProfileComponent} from "./product/pages/profile/profile.component";
+import {PostPageComponent} from "./product/pages/post/post-page.component";
 
 export const routes: Routes = [
     {
@@ -25,6 +26,11 @@ export const routes: Routes = [
     {
         path: 'profile',
         component: ProfileComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'post',
+        component: PostPageComponent,
         canActivate: [AuthGuard]
     },
     {
