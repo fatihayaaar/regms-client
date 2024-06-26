@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 import {filter} from "rxjs";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {profile} from "@apollo/client/testing/internal";
+import {FollowService} from "../../services/follow.service";
 
 @Component({
     selector: 'app-profile-card',
@@ -31,10 +32,14 @@ export class ProfileCardComponent implements OnInit {
     fullname: string = "null null";
     isEditModeBoxVisible: boolean = false;
     buttonText: string = "Edit Profile";
+    followButtonText: string = "Takip Et";
+    followButtonClass: string = 'btn btn-primary btn-send follow-btn';
+    isFollowButtonDisabled = true;
 
     constructor(private userService: UserService,
                 private profileService: ProfileService,
                 private profileStore: ProfileStore,
+                private followService: FollowService,
                 private snackBar: MatSnackBar,
                 private router: Router,
                 private route: ActivatedRoute,
@@ -64,6 +69,11 @@ export class ProfileCardComponent implements OnInit {
                 this.profileService.getProfile(this.username, (response) => {
                     this.profile = new Profile(response);
                     this.fullname = `${this.profile!.name} ${this.profile!.surname}`;
+                    if (this.profile.following) {
+                        this.followButtonText= "Takibi Bırak";
+                        this.followButtonClass = 'btn btn-primary btn-send';
+                    }
+                    this.isFollowButtonDisabled = false;
                 });
             }
         });
@@ -277,6 +287,27 @@ export class ProfileCardComponent implements OnInit {
                 this.showError("An error occurred while updating the background image.");
             }
         });
+    }
+
+    editFollowToggle() {
+        this.isFollowButtonDisabled = true;
+        if (this.profile!.following) {
+            this.followService.unfollow(this.username).subscribe((r) => {
+                console.log(r);
+                this.profile!.following = false;
+                this.followButtonText = "Takip Et";
+                this.followButtonClass= 'btn btn-primary btn-send follow-btn';
+                console.log(this.username);
+                this.isFollowButtonDisabled = false;
+            });
+        } else {
+            this.followService.follow(this.username).subscribe((r) => {
+                this.profile!.following = true;
+                this.followButtonText = "Takipten Çık";
+                this.followButtonClass= 'btn btn-primary btn-send';
+                this.isFollowButtonDisabled = false;
+            });
+        }
     }
 
     showError(message: string) {

@@ -9,6 +9,9 @@ export class Profile {
     name: string;
     surname: string;
     private: boolean;
+    following: boolean;
+    followerCount: number;
+    followeeCount: number;
 
     constructor(data: any) {
         this.id = data.id;
@@ -21,5 +24,8 @@ export class Profile {
         this.name = data.name;
         this.surname = data.surname;
         this.private = data.private;
+        this.following = data.following;
+        this.followerCount = data.followerCount;
+        this.followeeCount = data.followeeCount;
     }
 }

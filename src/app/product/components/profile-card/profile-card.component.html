@@ -43,6 +43,18 @@
                 <p class="biography-text card-text text-padding">{{ this.profile?.biography }}</p>
             }
         </div>
+        <div class="follower-container">
+            <div class="d-flex justify-content-center">
+                <div class="following-item">
+                    <p class="follow-text follow-text-title">takipçi</p>
+                    <p class="follow-text">{{ this.profile!.followerCount }}</p>
+                </div>
+                <div class="followee-item">
+                    <p class="follow-text follow-text-title">takip</p>
+                    <p class="follow-text">{{ this.profile!.followeeCount }}</p>
+                </div>
+            </div>
+        </div>
         <div class="text-center">
             @if (this.isMyProfile) {
                 <button (click)="editProfileOnclick()" class="btn btn-primary btn-send">
@@ -51,6 +63,10 @@
                 <button (click)="cancelEdit()" *ngIf="isEditModeBoxVisible"
                         class="btn btn-secondary btn-send cancel-btn">
                     Cancel
+                </button>
+            } @else {
+                <button (click)="editFollowToggle()" [class]="this.followButtonClass" [disabled]="this.isFollowButtonDisabled">
+                    {{ this.followButtonText }}
                 </button>
             }
         </div>

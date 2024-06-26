@@ -6,10 +6,13 @@ import {NetworkService} from "./network.service";
 })
 export class FollowService {
 
-    constructor(private network: NetworkService) {
+    constructor(private network: NetworkService) {}
+
+    follow(username: any){
+        return this.network.post(`/follow/v1/${username}/follow`, {});
     }
 
-    changeBiography(user: any){
-        return this.network.post('/profile/v1/change-biography', {});
+    unfollow(username: any){
+        return this.network.post(`/follow/v1/${username}/unfollow`, {});
     }
 }

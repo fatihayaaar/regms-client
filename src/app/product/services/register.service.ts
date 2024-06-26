@@ -14,7 +14,7 @@ export class RegisterService {
         return this.network.post(environment.registerEndpoint, {
             "name": user.name,
             "surname": user.surname,
-            "uid": user.username,
+            "uid": user.uid,
             "emailAddress": user.mail,
             "password": user.password,
             "gender": "male"

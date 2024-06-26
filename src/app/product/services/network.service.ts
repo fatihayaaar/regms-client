@@ -34,7 +34,7 @@ export class NetworkService {
             'Content-Type': 'application/json',
         });
 
-        return this.http.post(fullUrl, data, { headers }).pipe(
+        return this.http.post(fullUrl, data, { headers, responseType: "text" }).pipe(
             map(response => {
                 if (callback) {
                     callback(response);

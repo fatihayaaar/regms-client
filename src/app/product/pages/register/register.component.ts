@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit {
             const config = new MatSnackBarConfig();
             config.duration = 5000;
             config.verticalPosition = 'top';
-            this.snackBar.open(error, 'Close', config);
+            this.snackBar.open(error.message, 'Close', config);
           }
       );
     } else {

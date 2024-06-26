@@ -111,3 +111,35 @@
 .text-padding {
   padding: 0 0 1px 0;
 }
+
+.follow-btn {
+  background-color: transparent;
+  color: var(--text-color);
+  border: solid 2px var(--primary-color);
+}
+
+.follower-container {
+  padding-bottom: 20px;
+}
+
+.followee-item {
+  margin-left: 25px;
+}
+
+.follower-item {
+  margin-right: 25px;
+}
+
+.follow-text {
+  margin: 0;
+  padding: 0;
+  color: var(--text-color);
+  font-family: var(--font);
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+}
+
+.follow-text-title {
+  color: var(--header-secondary-text-color);
+}
