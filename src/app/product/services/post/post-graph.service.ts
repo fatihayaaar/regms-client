@@ -114,8 +114,11 @@ export class PostGraphService {
                 query GetPostById($id: String!) {
                   getPostById(id: $id) {
                     id
-                    title
-                    content
+                    text
+                    uri
+                    username
+                    avatar
+                    createdDate
                   }
                 }
             `, variables: {

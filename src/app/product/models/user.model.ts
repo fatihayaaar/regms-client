@@ -2,9 +2,9 @@ export interface User {
     id?: number;
     mail?: string;
     password?: string;
-    username?: string;
+    uid?: string;
     name?: string;
     surname?: string;
-    jpegPhoto?: string;
+    avatar?: string;
     gender?: string;
 }

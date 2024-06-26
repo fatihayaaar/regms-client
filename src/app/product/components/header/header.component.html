@@ -1,23 +1,37 @@
 <nav class="custom-shadow p-2 mb-0 header-container">
-  <div class="d-flex justify-content-between align-items-center">
-    <span class="col-md-3">
-      <a class="left logo-container" [routerLink]="['/home']">
-        <img [src]="logoPath" alt="" height="36" width="99"/>
-      </a>
-    </span>
-    <span class="col-md-6">
-      <div class="d-flex mx-auto col-md-7 justify-content-center">
-        <div class="input-group">
-          <span class="input-group-text">
-            <i class="bi bi-search"></i>
-          </span>
-          <input class="form-control" placeholder="Search" type="text">
-        </div>
-      </div>
-    </span>
-    <span class="col-md-3 d-flex justify-content-end align-items-center">
+    <div class="d-flex justify-content-between align-items-center">
+        <span class="col-md-3">
+            <a [routerLink]="['/home']" class="left logo-container">
+                <img [src]="logoPath" alt="" height="36" width="99"/>
+            </a>
+        </span>
+        <span class="col-md-6">
+            <div class="d-flex mx-auto col-md-7 justify-content-center">
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="bi bi-search"></i>
+                  </span>
+                    <input #searchInput (blur)="hideList()" (input)="onTextChange()" autocomplete="off"
+                           class="form-control"
+                           id="username" placeholder="Search" type="text">
+                </div>
+                <div *ngIf="showList && userList.length > 0" class="search-result-list col-md-6">
+                        <div (click)="selectSearchResult(user)" *ngFor="let user of userList.slice(0, 5)"
+                             class="search-result d-flex align-items-center">
+                            <div class="avatar-container">
+                                <app-avatar [imgSrc]="user.avatar"></app-avatar>
+                            </div>
+                            <div class="user-info">
+                                <div class="username">{{ user.uid }}</div>
+                                <div class="name-surname">{{ user.name }} {{ user.surname }}</div>
+                            </div>
+                        </div>
+                </div>
+          </div>
+        </span>
+        <span class="col-md-3 d-flex justify-content-end align-items-center">
         <span class="ml-auto">
-          <button class="btn btn-primary btn-send" (click)="uploadButtonClick()">
+          <button (click)="uploadButtonClick()" class="btn btn-primary btn-send">
             <i class="bi bi-upload btn-send-icon"></i>
             <p class="btn-send-text">Upload</p>
           </button>
@@ -33,13 +47,15 @@
           </button>
         </span>
       <span (mouseenter)="toggleDropdown(true)" (mouseleave)="closeDropdown()" class="avatar-container">
-        <a [class.show]="isDropdownOpen" aria-expanded="false" aria-haspopup="true" class="avatar-button" id="dropdownMenuButton">
+        <a [class.show]="isDropdownOpen" aria-expanded="false" aria-haspopup="true" class="avatar-button"
+           id="dropdownMenuButton">
           <app-avatar [imgSrc]="this.avatar"></app-avatar>
         </a>
-        <div [class.show]="isDropdownOpen" aria-labelledby="dropdownMenuButton" class="dropdown-menu dropdown-menu-right">
+        <div [class.show]="isDropdownOpen" aria-labelledby="dropdownMenuButton"
+             class="dropdown-menu dropdown-menu-right">
           <app-avatar-menu></app-avatar-menu>
         </div>
       </span>
     </span>
-  </div>
+    </div>
 </nav>

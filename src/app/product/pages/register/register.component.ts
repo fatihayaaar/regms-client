@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
     if (this.signUpForm!.valid) {
       const { username, email, password, name, surname } = this.signUpForm!.value;
       const user: User = <User>{
-        username: username,
+        uid: username,
         password: password,
         mail: email,
         name: name,

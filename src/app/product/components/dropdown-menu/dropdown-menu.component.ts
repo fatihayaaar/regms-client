@@ -1,6 +1,7 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {PostService} from "../../services/post/post.service";
 import {Post} from "../../models/post.model";
+import {Location} from "@angular/common";
 
 @Component({
     selector: 'app-dropdown-menu',
@@ -12,13 +13,13 @@ export class DropdownMenuComponent implements OnInit {
 
     @Input() postId?: string;
     @Input() isMyPost?: boolean;
+    @Input() isPostPage: boolean = false;
 
     isOpen: boolean = false;
     selectedOption: string | undefined;
     options?: string[];
 
-    constructor(private postService: PostService) {
-    }
+    constructor(private postService: PostService, private location: Location) {}
 
     ngOnInit() {
         if (this.isMyPost) {
@@ -46,6 +47,8 @@ export class DropdownMenuComponent implements OnInit {
         const post: Post = {
             id: this.postId
         };
-        this.postService.deletePost(post);
+        this.postService.deletePost(post, () => {
+            if (this.isPostPage) this.location.back();
+        });
     }
 }

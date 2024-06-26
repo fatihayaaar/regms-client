@@ -1,4 +1,4 @@
-<a class="card post-content post" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)" [routerLink]="['/post']" [queryParams]="{ post: JSON.stringify(this.post!)}">
+<a class="card post-content post" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)" [routerLink]="['/post']" [queryParams]="{ postId: this.post!.id}">
   <div class="d-flex align-items-start" [ngStyle]="customStyle">
     <a class="avatar-container" [routerLink]="['/profile']" [queryParams]="{ isMyProfile: false, username: this.post!.username }">
       <app-avatar [imgSrc]="this.avatar" ></app-avatar>
@@ -17,8 +17,8 @@
             </div>
           </div>
           <div>
-            <span class="nav-item">
-              <app-dropdown-menu [postId]="this.post!.id!" [isMyPost]="this.isMyPost"></app-dropdown-menu>
+            <span class="nav-item" (click)="$event.stopPropagation();$event.preventDefault();">
+              <app-dropdown-menu [postId]="this.post!.id!" [isMyPost]="this.isMyPost" [isPostPage]="this.isPostPage"></app-dropdown-menu>
             </span>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from "@angular/core";
 import {MatDialog} from "@angular/material/dialog";
 import {MediaDialogComponent} from "../media-dialog/media-dialog.component";
 import {AvatarComponent} from "../avatar/avatar.component";
@@ -16,19 +16,19 @@ import {ProfileStore} from "../../stores/profile.store";
     standalone: true,
     imports: [AvatarComponent, DropdownMenuComponent, NgStyle, NgClass, RouterLink,]
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, OnChanges {
 
     @Input() post: Post | undefined;
     @Input() isMyPost?: boolean;
     @Input() customStyle: any;
+    @Input() isPostPage: boolean = false;
 
     avatar?: string = "";
     isLiked: boolean = false;
     isHovered: boolean = false;
     protected readonly formatRelativeDate = formatRelativeDate;
 
-    constructor(public dialog: MatDialog, private profileStore: ProfileStore) {
-    }
+    constructor(public dialog: MatDialog, private profileStore: ProfileStore) {}
 
     ngOnInit() {
         this.avatar = this.post?.avatar;
@@ -45,6 +45,12 @@ export class PostComponent implements OnInit {
                     this.avatar = profile?.avatar;
                 });
             }
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['post']) {
+            this.avatar = this.post?.avatar;
         }
     }
 
@@ -65,6 +71,4 @@ export class PostComponent implements OnInit {
             }
         });
     }
-
-    protected readonly JSON = JSON;
 }

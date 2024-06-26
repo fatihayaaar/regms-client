@@ -5,7 +5,6 @@ import {ClickableListComponent} from "../../components/clickable-list/clickable-
 import {PostComponent} from "../../components/post/post.component";
 import {TrendsListComponent} from "../../components/trends-list/trends-list.component";
 import {PostService} from "../../services/post/post.service";
-import {Observable} from "rxjs";
 import {AsyncPipe} from "@angular/common";
 
 @Component({

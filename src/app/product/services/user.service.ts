@@ -9,6 +9,12 @@ export class UserService {
     constructor(private network: NetworkService) {
     }
 
+    search(value: string, callback?: (response: any) => void) {
+        return this.network.get(`/user/v1/search?query=${value}`, (response) => {
+            if (callback) callback(response);
+        });
+    }
+
     changeUsername(username: any) {
         return this.network.post('/user/v1/change-username', {"uid": username});
     }

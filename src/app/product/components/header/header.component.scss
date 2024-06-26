@@ -40,6 +40,10 @@
   color: var(--text-color);
 }
 
+.form-control:not(:focus) {
+  color: var(--text-color);
+}
+
 .input-group-text {
   background-color: var(--header-secondary-color);
   border-radius: 90px;
@@ -119,4 +123,51 @@
   border: none;
   margin-top: 5px;
   box-shadow: 2px 4px 19px rgba(0, 0, 0, 0.1);
+}
+
+.search-result-list {
+  position: absolute;
+  top: 60px;
+  background-color: var(--menu-color);
+  color: var(--text-color);
+  border-radius: 5px;
+  border: none;
+  max-height: 450px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.search-result {
+  padding: 10px 0 10px 0;
+  cursor: pointer;
+  display: flex;
+}
+
+.search-result:hover {
+  background-color: var(--item-hover-color);
+}
+
+.avatar-container {
+  margin-right: 15px;
+}
+
+.username {
+  font-family: var(--font);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1em;
+  color: var(--text-color);
+}
+
+.name-surname {
+  font-family: var(--font);
+  font-weight: 300;
+  font-style: normal;
+  font-size: 0.875em;
+  color: var(--text-secondary-color);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
 }

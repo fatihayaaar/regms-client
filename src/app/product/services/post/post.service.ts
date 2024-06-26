@@ -12,10 +12,17 @@ export class PostService {
     private postsSource = new BehaviorSubject<Post[]>([]);
     currentPosts = this.postsSource.asObservable();
 
+    private selectedPostSource = new BehaviorSubject<Post | null>(null);
+    selectedPost = this.selectedPostSource.asObservable();
+
     constructor(private graphqlService: PostGraphService, private profileStore: ProfileStore) {}
 
     setPosts(posts: Post[]) {
         this.postsSource.next(posts);
+    }
+
+    selectPost(post: Post) {
+        this.selectedPostSource.next(post);
     }
 
     createPost(post: Post, callback?: () => void) {
@@ -38,6 +45,11 @@ export class PostService {
             (result) => {
                 console.log('Post deleted:', result.data);
                 if (callback) callback();
+                const deletedPostId = post.id;
+                if (deletedPostId) {
+                    const updatedPosts = this.postsSource.value.filter(post => post.id !== deletedPostId);
+                    this.postsSource.next(updatedPosts);
+                }
             },
             (error) => {
                 console.error('Error deleting post:', error);
