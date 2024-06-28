@@ -1,0 +1,19 @@
+<div class="content-container justify-content-center">
+    <div class="row align-content-center">
+        <div class="col-md-12">
+            <div class="col title-container">
+                <button class="title-text" [class.active]="selectedTab === 'followers'" (click)="selectTab('followers')">Followers</button>
+                <button class="title-text" [class.active]="selectedTab === 'followee'" (click)="selectTab('followee')">Followee</button>
+            </div>
+            <div class="row">
+                <div class="col list-content-container">
+                    @if (this.isFollowers) {
+                        <app-followers [isFollowers]="true" [isMyProfile]="true"></app-followers>
+                    } @else {
+                        <app-followers [isFollowers]="false" [isMyProfile]="true"></app-followers>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

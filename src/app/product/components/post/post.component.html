@@ -34,9 +34,9 @@
         }
         <ul class="nav nav-stack small">
           <li class="nav-item btn btn-style">
-            <a class="nav-link active btn-content" href="#!" (click)="toggleLike()">
+            <a class="nav-link active btn-content" (click)="toggleLike($event)">
               <i class="bi bi-hand-thumbs-up-fill"
-                 [ngClass]="{'text-danger': isLiked, 'btn-style': !isLiked}"></i> {{ this.post?.likeCount }}
+                 [ngClass]="{'text-danger': this.isLike, 'btn-style': !this.isLike}"></i> {{ this.likeCount! > 0 ? this.likeCount: "" }}
             </a>
           </li>
           <li class="nav-item btn btn-style">

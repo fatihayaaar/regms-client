@@ -45,7 +45,7 @@ export class DropdownMenuComponent implements OnInit {
 
     deleteOption() {
         const post: Post = {
-            id: this.postId
+            id: this.postId,
         };
         this.postService.deletePost(post, () => {
             if (this.isPostPage) this.location.back();

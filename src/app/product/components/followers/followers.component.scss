@@ -1,0 +1,93 @@
+.followers-list {
+  background-color: var(--menu-color);
+  color: var(--text-color);
+  border-radius: 10px;
+  border: none;
+  width: 500px;
+  height: 500px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.followers {
+  padding: 10px 15px 10px 15px;
+  cursor: pointer;
+  display: flex;
+}
+
+.followers:hover {
+  background-color: var(--item-hover-color);
+}
+
+.avatar-container {
+  margin-right: 15px;
+}
+
+.username {
+  font-family: var(--font);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1em;
+  color: var(--text-color);
+}
+
+.name-surname {
+  font-family: var(--font);
+  font-weight: 300;
+  font-style: normal;
+  font-size: 0.875em;
+  color: var(--text-secondary-color);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.btn-send {
+  border: none;
+  align-items: center;
+  border-radius: 90px;
+  height: 40px;
+  width: 120px;
+}
+
+.btn-send:active {
+  background-color: var(--primary-action-color);
+}
+
+.follow-button {
+  background-color: transparent;
+  color: var(--text-color);
+  border: solid 2px var(--primary-color);
+}
+
+.footer-text {
+  margin: auto;
+  font-size: 10pt;
+  font-family: var(--font);
+  font-weight: 300;
+  font-style: normal;
+  color: var(--header-secondary-text-color);
+}
+
+.footer-container {
+  text-align: center;
+}
+
+.header-container {
+  font-size: 15pt;
+  font-family: var(--font);
+  font-weight: 400;
+  font-style: normal;
+  color: var(--text-color);
+  padding-left: 20px;
+  padding-bottom: 10px;
+}

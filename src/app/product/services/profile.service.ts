@@ -23,12 +23,23 @@ export class ProfileService {
         });
     }
 
+    getProfileById(id: string, callback?: (response: any) => void, errorCallback?: (error: any) => void) {
+        this.network.get(`/profile/v1/get?id=${id}`, (response) => {
+            const profile = new Profile(response);
+            if (callback) callback(profile);
+        });
+    }
+
     changeBiography(biography: any) {
         return this.network.put('/profile/v1/change-biography', { "biography": biography });
     }
 
     changePrivate(isPrivate: any) {
-        return this.network.post('/profile/v1/change-is-private', { "isPrivate": isPrivate });
+        return this.network.put('/profile/v1/change-is-private', { "private": isPrivate });
+    }
+
+    changeNotifications(isPrivate: any) {
+        return this.network.put('/profile/v1/change-is-notifications', { "notificationsEnabled": isPrivate });
     }
 
     changeBackgroundImage(backgroundImage: any) {

@@ -123,11 +123,15 @@
 }
 
 .followee-item {
-  margin-left: 25px;
+  margin-left: 15px;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.follower-item {
-  margin-right: 25px;
+.following-item {
+  margin-right: 15px;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .follow-text {

@@ -1,24 +1,18 @@
 <div class="list-container">
   <div class="col">
-    <div class="row">
+    <div class="row" [routerLink]="['/home']">
       <div class="col list-content-container">
         <i class="bi bi-compass list-icon"></i>
         <p class="list-text">Discover</p>
       </div>
     </div>
-    <div class="row">
+    <div class="row" [routerLink]="['/followers']">
       <div class="col list-content-container">
         <i class="bi bi-people list-icon"></i>
-        <p class="list-text">Following</p>
+        <p class="list-text">Followers</p>
       </div>
     </div>
-    <div class="row">
-      <div class="col list-content-container">
-        <i class="bi bi-search list-icon"></i>
-        <p class="list-text">Search</p>
-      </div>
-    </div>
-    <div class="row">
+    <div class="row" [routerLink]="['/settings']">
       <div class="col list-content-container">
         <i class="bi bi-gear list-icon"></i>
         <p class="list-text">Settings</p>

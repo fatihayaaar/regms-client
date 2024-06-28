@@ -66,6 +66,8 @@ export class PostGraphService {
                     username
                     avatar
                     createdDate
+                    isLike
+                    likeCount
                   }
                 }
             `,
@@ -83,6 +85,8 @@ export class PostGraphService {
                     username
                     avatar
                     createdDate
+                    isLike
+                    likeCount
                   }
                 }
             `,
@@ -100,6 +104,8 @@ export class PostGraphService {
                     username
                     avatar
                     createdDate
+                    isLike
+                    likeCount
                   }
                 }
             `, variables: {
@@ -119,6 +125,8 @@ export class PostGraphService {
                     username
                     avatar
                     createdDate
+                    isLike
+                    likeCount
                   }
                 }
             `, variables: {

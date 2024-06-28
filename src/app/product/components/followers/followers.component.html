@@ -1,0 +1,24 @@
+<div class="followers-list">
+    <div class="header-container">
+        {{ this.title }}
+    </div>
+    <div (click)="selectUser(user)" *ngFor="let user of users" class="followers">
+        <div class="avatar-container">
+            <app-avatar [imgSrc]="user.avatar"></app-avatar>
+        </div>
+        <div class="user-info">
+            <div class="username">{{ user.username }}</div>
+            <div class="name-surname">{{ user.name }} {{ user.surname }}</div>
+        </div>
+        @if (user.username != this.profileStore.getMyProfile()!.username) {
+            <button
+                    [class]="user.following? 'btn btn-primary btn-send' : 'btn btn-primary btn-send follow-button'"
+                    (click)="toggleFollow($event, user)">
+                {{ user.following ? "Takip" : "Takip Et" }}
+            </button>
+        }
+    </div>
+    <div class="d-flex flex-column flex-sm-row py-1 my-1 footer-container">
+        <p class="footer-text">Daha Fazlası Yok</p>
+    </div>
+</div>

@@ -39,6 +39,13 @@ export class PostSendBoxComponent implements OnInit {
         const input = event.target as HTMLInputElement;
         if (input.files && input.files[0]) {
             const file = input.files[0];
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+            if (!allowedTypes.includes(file.type)) {
+                alert('Sadece jpeg, png ve jpg dosyaları seçebilirsiniz.');
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = () => {
                 this.selectedFile = reader.result;
@@ -53,9 +60,9 @@ export class PostSendBoxComponent implements OnInit {
             return;
         }
 
-        const post: Post = {
+        let post: Post = {
             text: this.text,
-            uri: this.selectedFile as string || ''
+            uri: this.selectedFile as string || '',
         };
 
         this.postService.createPost(post, () => {

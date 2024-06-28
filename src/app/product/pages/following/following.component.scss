@@ -1,0 +1,39 @@
+.content-container {
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: transparent;
+  display: flex;
+}
+
+.title-container {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  gap: 20px;
+  padding: 15px 0;
+  margin: 0;
+}
+
+.title-text {
+  background-color: transparent;
+  display: inline-block;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 16pt;
+  font-family: var(--font);
+  font-weight: 400;
+  font-style: normal;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.title-text.active {
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.title-text:hover {
+}
+
+.title-text:focus {
+  outline: none;
+}

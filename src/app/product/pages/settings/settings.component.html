@@ -1,11 +1,46 @@
 <div class="content-container">
-  <div class="row">
-    <div class="col">
-      <app-clickable-list></app-clickable-list>
-      <app-footer></app-footer>
-    </div>
-    <div class="col">
-      <app-trends-list></app-trends-list>
-    </div>
+  <div class="row justify-content-center">
+      <div class="col-md-6">
+          <div class="row title-container">
+              <p class="title-text">Settings</p>
+          </div>
+          <div class="row">
+              <div class="col list-content-container">
+                  <i class="bi bi-lock item-icon"></i>
+                  <p class="list-text">Private</p>
+                  <div class="custom-toggle">
+                      <input type="checkbox" id="private-toggle-checkbox" class="theme-checkbox" (change)="togglePrivate()" [checked]="isPrivateChecked">
+                      <label for="private-toggle-checkbox" class="toggle-btn"></label>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col list-content-container">
+                  <i class="bi bi-bell item-icon"></i>
+                  <p class="list-text">Notifications</p>
+                  <div class="custom-toggle">
+                      <input type="checkbox" id="notifications-toggle-checkbox" class="theme-checkbox" (change)="toggleNotifications()" [checked]="isNotificationsChecked">
+                      <label for="notifications-toggle-checkbox" class="toggle-btn"></label>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col list-content-container">
+                  <i class="bi bi-moon item-icon"></i>
+                  <p class="list-text">Dark Mode</p>
+                  <div class="custom-toggle">
+                      <input type="checkbox" id="settings-theme-toggle-checkbox" class="theme-checkbox" (change)="toggleTheme()" [checked]="isThemeChecked">
+                      <label for="settings-theme-toggle-checkbox" class="toggle-btn"></label>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col list-content-container" (click)="logout()">
+                  <i class="bi bi-box-arrow-right item-icon"></i>
+                  <p class="list-text">Logout</p>
+              </div>
+          </div>
+      </div>
+
   </div>
 </div>

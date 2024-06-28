@@ -9,7 +9,6 @@ import {ThemeService} from "../../../core/services/theme.service";
 import {ProfileStore} from "../../stores/profile.store";
 import {FormsModule} from "@angular/forms";
 import {UserService} from "../../services/user.service";
-import {response} from "express";
 import {User} from "../../models/user.model";
 
 declare var bootstrap: any;

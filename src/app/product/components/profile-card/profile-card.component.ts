@@ -14,6 +14,9 @@ import {filter} from "rxjs";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {profile} from "@apollo/client/testing/internal";
 import {FollowService} from "../../services/follow.service";
+import {MatDialog} from "@angular/material/dialog";
+import {UploadDialogComponent} from "../upload-dialog/upload-dialog.component";
+import {FollowersComponent} from "../followers/followers.component";
 
 @Component({
     selector: 'app-profile-card',
@@ -43,6 +46,7 @@ export class ProfileCardComponent implements OnInit {
                 private snackBar: MatSnackBar,
                 private router: Router,
                 private route: ActivatedRoute,
+                private dialog: MatDialog,
     ) {
         this.router.events.pipe(
             filter(event => event instanceof NavigationEnd)
@@ -171,7 +175,7 @@ export class ProfileCardComponent implements OnInit {
 
     saveChangeUsername() {
         this.userService.changeUsername(this.profile!.username).subscribe((response) => {
-            if (response === true) {
+            if (response === 'true') {
                 this.originalProfile!.username = this.profile!.username;
                 this.profileStore.updateUsername(this.profile!.username);
                 this.buttonText = "Edit Profile";
@@ -197,7 +201,7 @@ export class ProfileCardComponent implements OnInit {
 
     saveChangeName() {
         this.userService.changeName(this.profile!.name).subscribe((response) => {
-            if (response === true) {
+            if (response === 'true') {
                 this.fullname = `${this.profile!.name} ${this.profile!.surname}`;
                 this.originalProfile!.name = this.profile!.name;
                 this.profileStore.updateName(this.profile!.name);
@@ -211,7 +215,7 @@ export class ProfileCardComponent implements OnInit {
 
     saveChangeSurname() {
         this.userService.changeSurname(this.profile!.surname).subscribe((response) => {
-            if (response === true) {
+            if (response === 'true') {
                 this.fullname = `${this.profile!.name} ${this.profile!.surname}`;
                 this.originalProfile!.surname = this.profile!.surname;
                 this.profileStore.updateSurname(this.profile!.surname);
@@ -233,7 +237,7 @@ export class ProfileCardComponent implements OnInit {
 
     saveProfileImage() {
         this.userService.changeAvatar(this.profile!.avatar).subscribe((response) => {
-            if (response === true) {
+            if (response === 'true') {
                 this.originalProfile!.avatar = this.profile!.avatar;
                 this.profileStore.updateAvatar(this.profile!.avatar);
                 this.showSuccess("Profile image updated successfully.");
@@ -247,7 +251,7 @@ export class ProfileCardComponent implements OnInit {
 
     deleteProfileImage() {
         this.userService.deleteAvatar().subscribe((response) => {
-            if (response === true) {
+            if (response === 'true') {
                 this.profile!.avatar = "";
                 this.originalProfile!.avatar = this.profile!.avatar;
                 this.profileStore.updateAvatar(this.profile!.avatar);
@@ -293,12 +297,11 @@ export class ProfileCardComponent implements OnInit {
         this.isFollowButtonDisabled = true;
         if (this.profile!.following) {
             this.followService.unfollow(this.username).subscribe((r) => {
-                console.log(r);
                 this.profile!.following = false;
                 this.followButtonText = "Takip Et";
                 this.followButtonClass= 'btn btn-primary btn-send follow-btn';
-                console.log(this.username);
                 this.isFollowButtonDisabled = false;
+                --this.profile!.followerCount;
             });
         } else {
             this.followService.follow(this.username).subscribe((r) => {
@@ -306,8 +309,17 @@ export class ProfileCardComponent implements OnInit {
                 this.followButtonText = "Takipten Çık";
                 this.followButtonClass= 'btn btn-primary btn-send';
                 this.isFollowButtonDisabled = false;
+                ++this.profile!.followerCount;
             });
         }
+    }
+
+    followersClick() {
+        this.dialog.open(FollowersComponent, {data: { isFollowers: true, isMyProfile: this.isMyProfile, username: this.username }});
+    }
+
+    followeeClick() {
+        this.dialog.open(FollowersComponent, {data: { isFollowers: false, isMyProfile: this.isMyProfile, username: this.username }});
     }
 
     showError(message: string) {

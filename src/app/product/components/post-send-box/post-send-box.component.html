@@ -11,7 +11,7 @@
                     <label class="btn btn-light btn-gallery" for="file-upload">
                         Add Media
                     </label>
-                    <input (change)="onFileSelected($event)" id="file-upload" style="display: none;" type="file">
+                    <input (change)="onFileSelected($event)" id="file-upload" style="display: none;" type="file" accept=".jpeg,.png,.jpg">
                     <button (click)="submitPost()" class="btn btn-primary btn-send" style="flex-shrink: 0; order: 1;">
                         <i class="bi bi-send-fill"></i>
                     </button>

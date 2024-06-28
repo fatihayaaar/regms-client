@@ -4,5 +4,5 @@
         <div (click)="backgroundImageInput.click()" class="menu-item">Fotoğraf Seç</div>
         <div (click)="removePhoto()" class="menu-item delete-photo-item">Fotoğrafı Kaldır</div>
     </div>
-    <input type="file" #backgroundImageInput style="display: none;" (change)="onFileSelected($event)" />
+    <input type="file" #backgroundImageInput style="display: none;" (change)="onFileSelected($event)" accept=".jpeg,.png,.jpg" />
 </div>

@@ -70,6 +70,14 @@ export class ProfileStore {
         this.updateProfileField('private', newPrivate);
     }
 
+    updateFollowerCount(newCount: number): void {
+        this.updateProfileField('followerCount', newCount);
+    }
+
+    updateFolloweeCount(newCount: number): void {
+        this.updateProfileField('followeeCount', newCount);
+    }
+
     private updateProfileField<K extends keyof Profile>(field: K, value: Profile[K]): void {
         const profile = this.getMyProfile();
         if (profile) {

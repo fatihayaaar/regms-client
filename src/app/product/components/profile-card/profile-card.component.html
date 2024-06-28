@@ -45,14 +45,14 @@
         </div>
         <div class="follower-container">
             <div class="d-flex justify-content-center">
-                <div class="following-item">
+                <a class="following-item" (click)="this.followersClick()">
                     <p class="follow-text follow-text-title">takipçi</p>
                     <p class="follow-text">{{ this.profile!.followerCount }}</p>
-                </div>
-                <div class="followee-item">
+                </a>
+                <a class="followee-item" (click)="this.followeeClick()">
                     <p class="follow-text follow-text-title">takip</p>
                     <p class="follow-text">{{ this.profile!.followeeCount }}</p>
-                </div>
+                </a>
             </div>
         </div>
         <div class="text-center">

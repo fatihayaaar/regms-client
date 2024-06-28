@@ -33,17 +33,7 @@
         <span class="ml-auto">
           <button (click)="uploadButtonClick()" class="btn btn-primary btn-send">
             <i class="bi bi-upload btn-send-icon"></i>
-            <p class="btn-send-text">Upload</p>
-          </button>
-        </span>
-        <span>
-          <button class="btn btn-primary btn-messages">
-            <i class="bi bi-person-plus"></i>
-          </button>
-        </span>
-        <span>
-          <button class="btn btn-primary btn-messages">
-            <i class="bi bi-chat-square-text"></i>
+            <p class="btn-send-text">Post</p>
           </button>
         </span>
       <span (mouseenter)="toggleDropdown(true)" (mouseleave)="closeDropdown()" class="avatar-container">
@@ -51,8 +41,7 @@
            id="dropdownMenuButton">
           <app-avatar [imgSrc]="this.avatar"></app-avatar>
         </a>
-        <div [class.show]="isDropdownOpen" aria-labelledby="dropdownMenuButton"
-             class="dropdown-menu dropdown-menu-right">
+        <div [class.show]="isDropdownOpen" aria-labelledby="dropdownMenuButton" class="dropdown-menu dropdown-menu-right">
           <app-avatar-menu></app-avatar-menu>
         </div>
       </span>

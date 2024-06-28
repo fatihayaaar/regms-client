@@ -1,4 +1,4 @@
-export interface Post {
+export class Post {
   id?: string;
   userId?: string;
   uri?: string;
@@ -11,7 +11,12 @@ export interface Post {
   isDeleted?: boolean;
   username?: string;
   avatar?: string;
+  isLike?: boolean;
 
   mediasUrl?: string[];
   content?: string;
+
+  constructor(init?: Partial<Post>) {
+    Object.assign(this, init);
+  }
 }

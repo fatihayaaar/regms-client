@@ -32,6 +32,14 @@ export class DropdownMenuComponent {
     onFileSelected(event: any): void {
         const file = event.target.files[0];
         if (file) {
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+            if (!allowedTypes.includes(file.type)) {
+                alert('Sadece jpeg, png ve jpg dosyaları seçebilirsiniz.');
+                event.target.value = '';
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = (e: any) => {
                 this.imageChanged.emit(e.target.result);

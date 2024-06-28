@@ -8,6 +8,7 @@ import {Post} from "../../models/post.model";
 import {RouterLink} from "@angular/router";
 import {formatRelativeDate} from "../../../core/utils/date.util";
 import {ProfileStore} from "../../stores/profile.store";
+import {LikeService} from "../../services/like.service";
 
 @Component({
     selector: 'app-post',
@@ -24,14 +25,18 @@ export class PostComponent implements OnInit, OnChanges {
     @Input() isPostPage: boolean = false;
 
     avatar?: string = "";
-    isLiked: boolean = false;
+    isLike: boolean | undefined = false;
+    likeCount: number | undefined = 0;
     isHovered: boolean = false;
     protected readonly formatRelativeDate = formatRelativeDate;
 
-    constructor(public dialog: MatDialog, private profileStore: ProfileStore) {}
+    constructor(public dialog: MatDialog, private profileStore: ProfileStore, private likeService: LikeService) {
+    }
 
     ngOnInit() {
         this.avatar = this.post?.avatar;
+        this.isLike = this.post?.isLike;
+        this.likeCount = this.post?.likeCount;
 
         if (this.isMyPost == null) {
             let username;
@@ -51,6 +56,8 @@ export class PostComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes['post']) {
             this.avatar = this.post?.avatar;
+            this.isLike = this.post?.isLike;
+            this.likeCount = this.post?.likeCount;
         }
     }
 
@@ -58,8 +65,20 @@ export class PostComponent implements OnInit, OnChanges {
         this.isHovered = hovered;
     }
 
-    toggleLike() {
-        this.isLiked = !this.isLiked;
+    toggleLike(event: MouseEvent, ) {
+        event.stopPropagation();
+        event.preventDefault();
+        if (this.isLike) {
+            this.likeService.unlike(this.post!.id).subscribe((r) => {
+                this.isLike = false;
+                this.likeCount = this.likeCount! - 1;
+            })
+        } else {
+            this.likeService.like(this.post!.id).subscribe((r) => {
+                this.isLike = true;
+                this.likeCount = this.likeCount! + 1;
+            });
+        }
     }
 
     openImageDialog(event: MouseEvent, _mediaUrl: any): void {
