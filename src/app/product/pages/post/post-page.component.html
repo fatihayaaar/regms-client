@@ -5,7 +5,56 @@
             <app-footer></app-footer>
         </div>
         <div class="col-md-6 posts-container">
-            <app-post [post]="this.post" [isPostPage]="true"></app-post>
+            <app-post [isPostPage]="true" [post]="this.post"></app-post>
+            <!-- comment component-->
+            <div class="card border-0">
+                <div class="card-body">
+                    <div class="col" style="display: flex; align-items: center;">
+                        <app-avatar [imgSrc]="this.avatar" style="margin-right: 10px;"></app-avatar>
+                        <textarea [(ngModel)]="this.text" class="form-control" placeholder="What's on your mind?"
+                                  rows="1" style="resize: none; flex: 1; margin-right: 10px;"></textarea>
+                        <button (click)="addComment(this.post!.id, this.text)" class="btn btn-primary btn-send" style="flex-shrink: 0;">
+                            <i class="bi bi-send-fill"></i>
+                        </button>
+                    </div>
+                    <div *ngIf="errorMessage" class="text-danger mt-2">
+                        {{ errorMessage }}
+                    </div>
+                </div>
+            </div>
+            @for (item of this.comments; track item.userId) {
+                <a class="card post-content post">
+                    <div [ngStyle]="customStyle" class="d-flex align-items-start">
+                        <a [queryParams]="{ isMyProfile: false, username: item.username }" [routerLink]="['/profile']"
+                           class="avatar-container">
+                            <app-avatar [imgSrc]="item.avatar"></app-avatar>
+                        </a>
+                        <span class="flex-grow-1">
+                      <div class="border-0 pb-0 post-header">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div class="d-flex align-items-center">
+                              <div class="nav nav-divider">
+                                <h6 class="nav-item card-title mb-0">
+                                  <a [queryParams]="{ isMyProfile: false, username: item.username }" [routerLink]="['/profile']" class="username-content"
+                                     href="">{{ item.username }}</a>
+                                  <span class="nav-item small post-date-item">{{ formatRelativeDateByNeo4j(item.createdDate) }}</span>
+                                </h6>
+                              </div>
+                          </div>
+                          <div>
+                            <span (click)="$event.stopPropagation();$event.preventDefault();" class="nav-item">
+                              <app-dropdown-menu [postId]="this.post!.id!"></app-dropdown-menu>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                        <p class="text-content"> {{ item.text }}</p>
+                    </span>
+                    </div>
+                </a>
+            } @empty {
+
+            }
         </div>
         <div class="col">
             <app-trends-list></app-trends-list>

@@ -41,7 +41,7 @@
           </li>
           <li class="nav-item btn btn-style">
             <a class="nav-link btn-content" href="#!"><i
-              class="bi bi-chat-fill"></i> {{ this.post?.commentCount }}</a>
+              class="bi bi-chat-fill"></i> {{ this.post!.commentCount! > 0 ? this.post!.commentCount! : ""}}</a>
           </li>
           <li class="nav-item btn btn-style">
             <a class="nav-link btn-content" href="#!"><i class="bi bi-share"></i></a>

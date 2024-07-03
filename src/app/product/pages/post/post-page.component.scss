@@ -3,6 +3,7 @@
   margin-right: 20px;
   background-color: transparent;
 }
+
 .posts-container {
   border: 0 solid var(--hr-color);
   border-left-width: 1px;
@@ -10,4 +11,116 @@
   border-radius: 0;
   margin: 0;
   padding: 0;
+}
+
+//add-comment
+.card {
+  background-color: transparent;
+
+  .card-body {
+    background-color: var(--menu-color);
+    border: none;
+    border-radius: 0;
+
+    .btn-send {
+      font-size: 1em;
+      background-color: var(--primary-color);
+      color: #ffffff;
+      border: none;
+      height: 40px;
+      width: 40px;
+      border-radius: 50px;
+      margin: 0;
+    }
+
+    .form-control {
+      font-size: 1em;
+      border-color: rgba(0, 0, 0, 0.0);
+      border-radius: 0;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      font-family: var(--font);
+      font-weight: 500;
+      font-style: normal;
+      background-color: transparent;
+      color: var(--text-color);
+    }
+
+    .form-control::placeholder {
+      color: var(--text-color);
+    }
+
+    .form-control:focus {
+      box-shadow: none;
+    }
+  }
+
+}
+
+
+.centered {
+  margin: 0 auto;
+  float: none;
+}
+
+.nav.nav-stack.small li.nav-item {
+  padding: 5px;
+  margin: 0 0.5rem 0 0;
+  border-radius: 90px;
+}
+
+.nav.nav-stack.small li.nav-item a.nav-link {
+  padding: 0.25rem 0.5rem;
+  font-family: var(--font);
+  font-weight: 500;
+  font-style: normal;
+  font-size: 0.875rem;
+}
+
+.username-content {
+  text-decoration: none;
+  color: var(--text-color);
+  font-family: var(--font);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1rem;
+}
+
+.post-date-item {
+  color: #999;
+  font-family: var(--font);
+  font-weight: 300;
+  font-size: 0.750rem;
+  margin-left: 0.5rem;
+}
+
+.post-content:hover {
+  background-color: var(--item-hover-color);
+  cursor: pointer;
+}
+
+.post {
+  border: 0 solid var(--hr-color);
+  border-bottom-width: 1px;
+  border-radius: 0;
+  background-color: transparent;
+  padding: 15px 15px 5px 15px;
+  text-decoration: none;
+}
+
+.avatar-container {
+  margin-right: 10px;
+}
+
+.post-header {
+  margin-top: 0;
+}
+
+.text-content {
+  font-family: var(--font);
+  font-weight: 300;
+  font-style: normal;
+  font-size: 11pt;
+  color: var(--text-color);
+  margin-bottom: 0.7rem;
 }

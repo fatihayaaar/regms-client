@@ -68,6 +68,7 @@ export class PostGraphService {
                     createdDate
                     isLike
                     likeCount
+                    commentCount
                   }
                 }
             `,
@@ -87,6 +88,7 @@ export class PostGraphService {
                     createdDate
                     isLike
                     likeCount
+                    commentCount
                   }
                 }
             `,
@@ -106,6 +108,7 @@ export class PostGraphService {
                     createdDate
                     isLike
                     likeCount
+                    commentCount
                   }
                 }
             `, variables: {
@@ -127,6 +130,7 @@ export class PostGraphService {
                     createdDate
                     isLike
                     likeCount
+                    commentCount
                   }
                 }
             `, variables: {
