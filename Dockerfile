@@ -1,19 +1,21 @@
-FROM node:14 AS build
+FROM node:18.19.0 as build
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY package*.json ./
 
 RUN npm install
 
+RUN npm install -g @angular/cli
+
 COPY . .
 
-RUN npm run build --prod
+RUN ng build --configuration=production
 
-FROM nginx:alpine
+FROM nginx:latest
 
-COPY --from=build /app/dist/* /usr/share/nginx/html/
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 80
+COPY --from=build /app/dist/regms-client/browser /usr/share/nginx/html
 
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 4200

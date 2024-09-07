@@ -5,7 +5,7 @@ export function initializeKeycloak(keycloak: KeycloakService) {
         keycloak.init({
             config: {
                 realm: 'regms',
-                url: 'http://localhost:8081/auth',
+                url: 'http://keycloak:8081/auth',
                 clientId: 'regms-client'
             },
             initOptions: {
